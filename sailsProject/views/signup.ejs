@@ -21,36 +21,27 @@
   <body ng-app="SignupModule" ng-controller="SignupController" ng-cloak>
     <div class="container-fluid">
 
-      <!-- Creates the navbar -->
         <nav class="navbar navbar-default navbar-inverse">
 
-          <!-- This creates the mechanism for the collapse button -->
           <button type="button" class="navbar-toggle" data-toggle="collapse" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-
-            <!-- This controls the number of lines in the image when the nav collapse -->
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
 
-          <!-- This is the brand on the left-hand side. -->
           <a class="navbar-brand" href="/#"> Create a onthepitch account</a>
           <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
 
-          <!-- LOGIN FORM -->
           <form ng-submit="submitLoginForm()" class="navbar-form navbar-right">
 
-              <!-- E M A I L -->
               <div class="form-group">
                   <input ng-model="loginForm.email" type="text" placeholder="Email" name="email" class="form-control">
               </div>
 
-              <!-- P A S S W O R D -->
               <div class="form-group">
                   <input ng-model="loginForm.password" type="password" placeholder="Password" name="password" class="form-control">
               </div>
 
-              <!-- S U B M I T -->
               <button type="submit" class="btn btn-success">
                 <span ng-show="!loginForm.loading">Sign in</span>
                 <span ng-show="loginForm.loading" class="fa fa-spinner"></span>
@@ -62,7 +53,6 @@
       </div>
     </div>
 
-    <!-- SIGNUP FORM -->
     <form ng-submit="submitSignupForm()" id="sign-up-form" class="form-signin" name="signup">
       <h2 class="form-signin-heading">Create an account</h2>
       <div class="row">
@@ -72,10 +62,9 @@
                               signup.firstname.$dirty}">
           <label>First name</label>
 
-          <!-- For this input field make it required, and have a max length of 25 -->
           <input type="text" class="form-control" placeholder="Zlatan" name="firstname" ng-model="signupForm.firstname" ng-maxlength="50" required>
 
-          <span class="help-block has-error" ng-if="signup.name.$dirty">
+          <span class="help-block has-error" ng-if="signup.firstname.$dirty">
             <span ng-show="signup.firstname.$error.required">First name is required.</span>
             <span ng-show="signup.firstname.$error.maxlength">Cannot be more than 50 characters.</span>
           </span>
@@ -86,20 +75,17 @@
                               signup.lastname.$dirty}">
           <label>Last name</label>
 
-          <!-- For this input field make it required, and have a max length of 25 -->
           <input type="text" class="form-control" placeholder="Ibrahimovic" name="lastname" ng-model="signupForm.lastname" ng-maxlength="50" required>
 
-          <!-- Also, if signup.name.$dirty is true, show the message depending upon the particular properties truthiness (e.g. required
-          and/or maxlength) -->
-          <span class="help-block has-error" ng-if="signup.name.$dirty">
+          <span class="help-block has-error" ng-if="signup.lastname.$dirty">
             <span ng-show="signup.lastname.$error.required">Last name is required.</span>
             <span ng-show="signup.lastname.$error.maxlength">Cannot be more than 50 characters.</span>
           </span>
         </div>
 
         <div class="control-group form-group col-md-12"
-          ng-class="{'has-error':signup.title.$invalid &&
-                                signup.title.$dirty}">
+          ng-class="{'has-error':signup.position.$invalid &&
+                                signup.position.$dirty}">
           <label>Position</label>
           <select class="form-control" name="position" ng-model="signupForm.position">
             <option value="spectator" name="spectator">Spectator</option>
@@ -127,7 +113,7 @@
         ng-class="{'has-error':signup.password.$invalid &&
                               signup.password.$dirty}">
           <label>Choose a password</label>
-          <!-- Added the compareTo directive that compares the passowrds -->
+
           <input type="password" class="form-control" placeholder="at least 6 characters" name="password" ng-model="signupForm.password" id="password" required ng-minlength="6" compare-to="signupForm.confirmPassword" >
           <span class="help-block has-error" ng-if="signup.password.$dirty">
             <span ng-show="signup.password.$error.required">Password is required.</span>
@@ -147,7 +133,6 @@
 
       <br/>
 
-      <!-- Disable signup button until the form has no errors -->
       <button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="signup.$invalid">
         <span ng-show="!signupForm.loading">Create Account</span>
         <span class="overlord-loading-spinner fa fa-spinner" ng-show="signupForm.loading" ></span>
@@ -159,8 +144,8 @@
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
-    <script src="/js/dependencies/angular-toastr.js"></script>
     <script src="/js/dependencies/angular.js"></script>
+    <script src="/js/dependencies/angular-toastr.js"></script>
     <script src="/js/dependencies/compareTo.module.js"></script>
     <script src="/js/public/signup/SignupModule.js"></script>
     <script src="/js/public/signup/SignupController.js"></script>
