@@ -1,0 +1,25 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.navbar.green {
+  background-color: #27ae60;
+  border-radius: 0;
+}
+
+.navbar a {
+  color: #ffffff;
+}
+
+.navbar a:hover {
+  background-color: #ffffff;
+  color: #27ae60;
+}
+
+.navbar-nav {
+  float: right;
+}

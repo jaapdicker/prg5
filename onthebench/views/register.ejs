@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<hmtl>
+  <head>
+    <title>ONTHEBENCH</title>
+
+    <link rel="stylesheet" href="./stylesheets/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./stylesheets/style.css"/>
+
+  </head>
+  <body>
+
+    <container>
+      <nav class="navbar green fixed-top">
+        <a class="navbar-brand" href="/">ONTHEBENCH</a>
+        <ul class="nav navbar-nav">
+          <% for(var i = 0; i < menuitems.length; i++) { %>
+            <li><a href="<%= menuitems[i] %>"><%= menuitems[i] %></a></li>
+          <% } %>
+        </ul>
+      </nav>
+
+      <h1>
+        Register
+      </h1>
+    </container>
+
+    <scripts src="./js/bootstrap.min.js"></scripts>
+  </body>
+</hmtl>
