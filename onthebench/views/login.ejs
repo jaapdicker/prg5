@@ -3,27 +3,41 @@
   <head>
     <title>ONTHEBENCH</title>
 
-    <link rel="stylesheet" href="./stylesheets/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./stylesheets/style.css"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
 
   </head>
   <body>
 
-    <container>
-      <nav class="navbar green fixed-top">
-        <a class="navbar-brand" href="/">ONTHEBENCH</a>
-        <ul class="nav navbar-nav">
-          <% for(var i = 0; i < menuitems.length; i++) { %>
-            <li><a href="<%= menuitems[i] %>"><%= menuitems[i] %></a></li>
-          <% } %>
-        </ul>
-      </nav>
+    <nav class="navbar bg-primary fixed-top">
+      <a class="navbar-brand" href="/">ONTHEBENCH</a>
+      <ul class="nav navbar-nav">
+        <% for(var i = 0; i < menuitems.length; i++) { %>
+          <li class="nav-item"><a href="<%= menuitems[i] %>"><%= menuitems[i] %></a></li>
+        <% } %>
+      </ul>
+    </nav>
 
-      <h1>
-        Login
-      </h1>
+    <container>
+      <form method="post" action="/" class="form-signin">
+        <h2 class="form-signin-heading">
+          Login
+        </h2>
+
+        <!-- email -->
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus />
+
+        <!-- password -->
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required />
+
+        <!-- submit -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      </form>
     </container>
 
-    <scripts src="./js/bootstrap.min.js"></scripts>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
   </body>
 </hmtl>
