@@ -13,5 +13,5 @@ node_modules
 npm-debug.log
 */.DS_Store
 .DS_Store
-./data/*
-data/*
+./data/db/*
+data/db/*
