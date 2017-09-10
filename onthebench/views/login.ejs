@@ -19,10 +19,13 @@
     </nav>
 
     <container>
-      <form method="post" action="/" class="form-signin">
+      <form method="post" action="/login" class="form-signin">
         <h2 class="form-signin-heading">
           Login
         </h2>
+        <% if (error) { %>
+          <p class="error"><%= error.message %></p>
+        <% } %>
 
         <!-- email -->
         <label for="inputEmail" class="sr-only">Email</label>

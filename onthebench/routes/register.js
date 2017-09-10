@@ -1,11 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var mongoClient = require('../helpers/dbconnect');
+var dbmodels = require('../dbmodels');
 
 // get register
 router.get('/register', function(req, res) {
-  // load data form db
-
   res.render('register', {
     menuitems: ["register", "login"]
   });
@@ -13,11 +11,26 @@ router.get('/register', function(req, res) {
 
 // post register
 router.post('/register', function(req, res) {
-  console.log("REQ", req);
+  // check if email exists
+  dbmodels.user.find({
+    email: req.body.email
+  }, function(err, success) {
+    if (err) res.send('There already is an account with this email');
+    if (success) {
+      // save new user
+      var user = new dbmodels.user(req.body);
+      user.save(function(err, user) {
+        if (err) {
+          console.log('errors', err);
+        } else {
+          console.log('commit register');
+        }
+      });
 
-  // redirect to index
-  // res.redirect('/');
-  res.send('registered in');
+      // redirect to index
+      res.redirect('/');
+    }
+  })
 });
 
 module.exports = router;

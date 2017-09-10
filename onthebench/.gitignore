@@ -14,4 +14,4 @@ npm-debug.log
 */.DS_Store
 .DS_Store
 ./data/db/*
-data/db/*
+./data/db
