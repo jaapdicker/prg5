@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('../helpers/databaseHelper.js');
 var dbmodels = require('../dbmodels');
 
 // get login
@@ -18,7 +17,7 @@ router.get('/login', function(req, res) {
 
 // post login
 router.post('/login', function(req, res) {
-  console.log(req.body);
+  // get the only user
   dbmodels.user.findOne({
     email: req.body.email,
     password: req.body.password
