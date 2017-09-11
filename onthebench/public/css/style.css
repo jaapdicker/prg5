@@ -1,3 +1,4 @@
+/* GENERAL */
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -6,6 +7,13 @@ a {
   color: #00B7FF;
 }
 
+hr {
+  border-color: #333;
+  color: #333;
+  background-color: #333;
+}
+
+/* NAVBAR */
 .navbar {
   border-radius: 0;
 }
@@ -25,15 +33,37 @@ a {
   float: right;
 }
 
+.navbar-nav.navbar-right {
+  text-align: right;
+  margin-right: 15px;
+  line-height: 50px;
+}
+
+.navbar-nav.navbar-right a {
+  text-decoration: none;
+}
+
 .navbar-nav .nav-item {
   display: inline-flex;
 }
 
-.form-signin, .form-register {
+.navbar-nav.navbar-right a.no-hover:hover {
+  background-color: transparent;
+}
+
+/* FORM */
+.form {
   width: 250px;
   margin: auto;
 }
 
-.form-signin input, .form-register input, .form-register select {
+.form input, .form select {
   margin: 7px 0;
+}
+
+/* BUTTON */
+.container-btn {
+  width: 250px;
+  margin: auto;
+  margin-top: 15px;
 }

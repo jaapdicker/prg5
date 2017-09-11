@@ -31,9 +31,16 @@ router.post('/login', function(req, res) {
         }
       });
     } else if (user && user.email === req.body.email && user.password === req.body.password) {
+      // remove password from db user
+      var cookieUser = {
+        id: user._id,
+        fullName: user.firstName + ' ' + user.lastName,
+        email: user.email,
+        position: user.position
+      };
       // set login cookie
       res.cookie('session', {
-        user: user,
+        user: cookieUser,
         loggedIn: true,
       });
       // redirect to index

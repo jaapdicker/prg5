@@ -30,6 +30,7 @@ app.use(require('./routes/users'));
 app.use(require('./routes/login'));
 app.use(require('./routes/logout'));
 app.use(require('./routes/register'));
+app.use(require('./routes/profile'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

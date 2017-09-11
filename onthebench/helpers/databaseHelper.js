@@ -1,5 +1,3 @@
-// var mongodb = require('mongodb');
-// var mongoClient = mongodb.MongoClient;
 var mongoose =  require('mongoose');
 
 // db connection

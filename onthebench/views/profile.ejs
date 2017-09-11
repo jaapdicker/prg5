@@ -3,28 +3,28 @@
   <head>
     <title>ONTHEBENCH</title>
 
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./css/style.css"/>
-
   </head>
   <body>
 
     <nav class="navbar bg-primary fixed-top">
       <a class="navbar-brand" href="/">ONTHEBENCH</a>
-      <ul class="nav navbar-nav">
-        <% for(var i = 0; i < menuitems.length; i++) { %>
-          <li class="nav-item"><a href="<%= menuitems[i] %>"><%= menuitems[i] %></a></li>
-        <% } %>
-      </ul>
+
+      <h4 class="navbar-nav navbar-right">
+        <%= profile.fullName %>
+        <a href="/profile" class="fa fa-cogs no-hover"></a>
+      </h4>
     </nav>
 
     <container>
-      <form method="post" action="/register" class="form form-register">
-        <h2 class="form-heading form-register-heading">
-          Register
+      <form method="post" action="/profile" class="form form-profile">
+        <h2 class="from-heading form-profile-heading">
+          Edit profile
         </h2>
-        <% if (error) { %>
-          <p class="error"><%= error.message %></p>
+        <% if (message) { %>
+          <p class="error"><%= message.text %></p>
         <% } %>
 
         <!-- first name -->
@@ -59,8 +59,10 @@
         <input type="password" id="inputPasswordConfirm" name="passwordConfirm–" class="form-control" placeholder="Password confirm" required />
 
         <!-- submit -->
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save profile</button>
+        <hr />
       </form>
+      <a href="/logout" class="btn btn-md btn-primary btn-block container-btn">Log out</a>
     </container>
 
     <script src="./js/jquery.min.js"></script>

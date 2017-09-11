@@ -4,8 +4,14 @@ var dbmodels = require('../dbmodels');
 
 // get register
 router.get('/register', function(req, res) {
+  var session = req.cookies['session'];
+
+  if (session && session.loggedIn) {
+    res.redirect('/');
+  }
   res.render('register', {
-    menuitems: ["register", "login"]
+    menuitems: ["register", "login"],
+    error: {}
   });
 });
 
