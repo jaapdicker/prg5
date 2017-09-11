@@ -1,4 +1,4 @@
-var mongoose = require('./helpers/dbconnect');
+var mongoose = require('./helpers/databaseHelper');
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
@@ -12,7 +12,7 @@ var userSchema = new Schema({
   email: String,
   password: String,
   team: Object,
-});
+}, { collection: 'Users' });
 var user = mongoose.model('user', userSchema);
 
 
@@ -22,7 +22,7 @@ var teamSchema = new Schema({
   name: String,
   players: Array,
   captain: Object
-});
+}, { collection: 'Teams' });
 var team = mongoose.model('team', teamSchema);
 
 // event
@@ -33,7 +33,7 @@ var eventSchema = new Schema({
   date: Date,
   location: String,
   players: Array
-});
+}, { collection: 'Events' });
 var event = mongoose.model('event', eventSchema);
 
 // club
@@ -41,7 +41,7 @@ var clubSchema = new Schema({
   id: ObjectId,
   address: String,
   teams: Array
-});
+}, { collection: 'Clubs' });
 var club = mongoose.model('club', clubSchema);
 
 var dbmodels = {
