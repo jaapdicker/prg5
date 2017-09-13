@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
   if (session && session.loggedIn) {
     dbmodels.club.find({}, function(err, clubs) {
       res.render('index', {
-        user: session,
+        profile: session,
         clubs: clubs,
         teams: [],
         search: ""
@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
   dbmodels.club.findOne({ name: req.body.search }, function(err, club) {
     if(err) {
       res.render('index', {
-        user: req.cookies['session'],
+        profile: req.cookies['session'],
         clubs: [],
         teams: [],
         search: req.body.search
@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
     }
     dbmodels.team.find({ club: club._id }, function(err, teams) {
       res.render('index', {
-        user: req.cookies['session'],
+        profile: req.cookies['session'],
         clubs: club,
         teams: teams,
         search: req.body.search
