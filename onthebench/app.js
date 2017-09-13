@@ -32,6 +32,10 @@ app.use(require('./routes/logout'));
 app.use(require('./routes/register'));
 app.use(require('./routes/profile'));
 
+app.use(require('./routes/clubCreate'));
+app.use(require('./routes/team'));
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

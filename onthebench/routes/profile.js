@@ -17,8 +17,8 @@ router.get('/profile', function(req, res) {
 // post profile update
 router.post('/profile', function(req, res) {
   var userId = req.cookies['session'].user.id;
-  // find only user and update
 
+  // find only user and update
   dbmodels.user.findOneAndUpdate({ _id: userId }, req.body, function(err, profile) {
     if(err) {
       res.render('profile', {

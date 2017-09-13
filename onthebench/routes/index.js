@@ -1,16 +1,45 @@
 var express = require('express');
 var router = express.Router();
+var dbmodels = require('../dbmodels');
 
 // get index
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   var session = req.cookies['session'];
 
   // check if already logged in
   if (session && session.loggedIn) {
-    res.render('index', { title: 'Express' });
+    dbmodels.club.find({}, function(err, clubs) {
+      res.render('index', {
+        user: session,
+        clubs: clubs,
+        teams: [],
+        search: ""
+      })
+    });
   } else {
     res.redirect('/login');
   }
+});
+
+router.post('/', function(req, res) {
+  dbmodels.club.findOne({ name: req.body.search }, function(err, club) {
+    if(err) {
+      res.render('index', {
+        user: req.cookies['session'],
+        clubs: [],
+        teams: [],
+        search: req.body.search
+      });
+    }
+    dbmodels.team.find({ club: club._id }, function(err, teams) {
+      res.render('index', {
+        user: req.cookies['session'],
+        clubs: club,
+        teams: teams,
+        search: req.body.search
+      });
+    });
+  });
 });
 
 module.exports = router;
