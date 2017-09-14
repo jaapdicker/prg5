@@ -58,14 +58,14 @@ a.club-add {
 }
 .form-inline.form-club-search .form-control {
   display: inline-block !important;
-  width: calc(40%);
+  width: 79.5%;
 }
 .form-inline.form-club-search button {
   margin-top: -1px;
-  width: 55px;
+  width: 20%;
 }
 .form-inline.form-club-search button:hover {
-  color: white;
+  color: #fff;
   background-color: #27ae60;
 }
 .form input,
