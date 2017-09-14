@@ -24,8 +24,8 @@ var teamSchema = new Schema({
     enum: ["saturday", "sunday"]
   },
   class: Number,
-  captain: { type: Schema.Types.ObjectId, ref: 'user' },
-  club: { type: Schema.Types.ObjectId, ref: 'club' }
+  _captain: { type: Schema.Types.ObjectId, ref: 'user' },
+  _clubId: { type: Schema.Types.ObjectId, ref: 'club' }
 }, { collection: 'Teams' });
 var team = mongoose.model('team', teamSchema);
 

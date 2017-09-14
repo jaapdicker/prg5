@@ -24,6 +24,9 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.3.2",
     "mongodb": "^2.2.31"
   }
 }

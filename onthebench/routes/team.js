@@ -7,7 +7,7 @@ router.get('/team/new', function(req, res) {
 
   if (session && !session.loggedIn) res.redirect('/login');
 
-  res.render('team/new', {
+  res.render('team_new', {
     profile: session.user,
     message: {},
   });

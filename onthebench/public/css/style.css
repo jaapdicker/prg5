@@ -2,112 +2,36 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
 a {
-  color: #00B7FF;
+  color: #219351;
 }
-
 hr {
   border-color: #ccc;
   color: #ccc;
   background-color: #ccc;
 }
-
 .content {
   width: 75%;
   margin: 0 auto;
 }
-
 .centered {
   text-align: center;
   margin: 0 auto;
 }
-
 .fa {
   color: #333;
 }
-
-/* NAVBAR */
-.navbar {
-  border-radius: 0;
-}
-
-.navbar a {
-  color: #ffffff;
-}
-
-.navbar a:hover {
-  background-color: #ffffff;
-  color: #27ae60;
-}
-
-.navbar-nav {
-  min-width: 150px;
-  margin-right: 0;
-  float: right;
-}
-
-.navbar-nav.navbar-right {
-  text-align: right;
-  margin-right: 15px;
-  line-height: 50px;
-}
-
-.navbar-nav.navbar-right a {
-  text-decoration: none;
-}
-
-.navbar-nav .nav-item {
-  display: inline-flex;
-}
-
-.navbar-nav.navbar-right a.no-hover:hover {
-  background-color: transparent;
-}
-
-/* FORM */
-.form {
-  width: 250px;
-  margin: auto;
-}
-
-.form-inline.form-club-search {
-  margin: 36px auto;
-  width: 75%;
-}
-
-.form-inline.form-club-search .form-control {
-  display: inline-block !important;
-  width: calc(100% - 60px);
-}
-
-.form-inline.form-club-search button {
-  margin-top: -1px;
-  width: 55px;
-}
-
-.form-inline.form-club-search button:hover {
-  color: white;
-  background-color: #27ae60;
-}
-
-.form input, .form select {
-  margin: 7px 0;
-}
-
 /* BUTTON */
 .container-btn {
   width: 250px;
   margin: auto;
   margin-top: 15px;
 }
-
 .btn-inverted.btn-primary {
   background-color: transparent;
   border-color: #27ae60;
   color: #27ae60;
 }
-
 a.club-add {
   width: 100%;
   text-align: center;
@@ -116,41 +40,95 @@ a.club-add {
   color: #333;
   font-size: 20px;
 }
-
-.club-add:hover, .club-add:focus {
+.club-add:hover,
+.club-add:focus {
   text-decoration: none;
 }
-
 .club-add:hover .fa {
   color: #27ae60;
 }
-
-/* CLUBS */
-.club, .team {
+/* FORM */
+.form {
+  width: 250px;
+  margin: auto;
+}
+.form-inline.form-club-search {
+  margin: 36px auto;
+  width: 75%;
+}
+.form-inline.form-club-search .form-control {
+  display: inline-block !important;
+  width: calc(40%);
+}
+.form-inline.form-club-search button {
+  margin-top: -1px;
+  width: 55px;
+}
+.form-inline.form-club-search button:hover {
+  color: white;
+  background-color: #27ae60;
+}
+.form input,
+.form select {
+  margin: 7px 0;
+}
+/* listItems */
+.club,
+.team {
   margin: 7px auto;
   border: 1px solid #ccc;
   border-radius: 5px;
   line-height: 50px;
   padding: 7px;
 }
-
-.club *, .club-add *, .team * {
+.club *,
+.club-add *,
+.team * {
   display: inline;
   vertical-align: middle;
 }
-
-.club .fa, .team .fa {
+.club .fa,
+.team .fa {
   margin: 0 15px;
   font-size: 24px;
   color: #333;
 }
-
-.club .fa:hover, .team .fa:hover {
+.club .fa:hover,
+.team .fa:hover {
   text-decoration: none;
 }
-
 .fa.right-aligned {
   float: right;
   line-height: 50px;
   vertical-align: middle;
+}
+/* NAVBAR */
+.navbar {
+  border-radius: 0;
+}
+.navbar a {
+  color: #ffffff;
+}
+.navbar a:hover {
+  background-color: #ffffff;
+  color: #27ae60;
+}
+.navbar-nav {
+  min-width: 150px;
+  margin-right: 0;
+  float: right;
+}
+.navbar-nav.navbar-right {
+  text-align: right;
+  margin-right: 15px;
+  line-height: 50px;
+}
+.navbar-nav.navbar-right a {
+  text-decoration: none;
+}
+.navbar-nav .nav-item {
+  display: inline-flex;
+}
+.navbar-nav.navbar-right a.no-hover:hover {
+  background-color: transparent;
 }
