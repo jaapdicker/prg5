@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
   if (session && session.loggedIn) {
     dbmodels.club.find({}, function(err, clubs) {
       res.render('index', {
-        profile: session,
+        profile: session.user,
         clubs: clubs,
         teams: [],
         search: ""
@@ -22,7 +22,12 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  dbmodels.club.findOne({ name: req.body.search }, function(err, club) {
+  dbmodels.club.find({
+    name: {
+      "$regex": req.body.search,
+      "$options": "i"
+    }
+  }, function(err, club) {
     if(err) {
       res.render('index', {
         profile: req.cookies['session'],

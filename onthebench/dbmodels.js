@@ -18,7 +18,7 @@ var user = mongoose.model('user', userSchema);
 // team
 var teamSchema = new Schema({
   id: ObjectId,
-  teamnr: Number,
+  name: String,
   matchday: {
     type: String,
     enum: ["saturday", "sunday"]
@@ -75,7 +75,6 @@ var eventSchema = new Schema({
   date: Date,
   location: String,
   team: [{ type: Schema.Types.ObjectId, ref: 'team' }],
-  players: [{ type: Schema.Types.ObjectId, ref: 'player' }]
 }, { collection: 'Events' });
 var event = mongoose.model('event', eventSchema);
 
