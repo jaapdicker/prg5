@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<hmtl>
+  <head>
+    <title>ONTHEBENCH</title>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+
+  </head>
+  <body>
+
+    <nav class="navbar bg-primary fixed-top">
+      <a class="navbar-brand" href="/">ONTHEBENCH</a>
+
+      <h4 class="navbar-nav navbar-right">
+        <%= profile.fullName %>
+        <a href="/profile" class="fa fa-cogs no-hover"></a>
+      </h4>
+    </nav>
+
+    <container>
+      <form method="post" action="/team-new" class="form form-team">
+        <h2 class="form-heading form-team-heading">
+          New team
+        </h2>
+        <% if (message) { %>
+          <p class="error"><%= message.text %></p>
+        <% } %>
+
+        <div class="row">
+          <!-- club -->
+          <div class="col-xs-7 form-group">
+            <label for="inputClub" class="sr-only">Club</label>
+            <select class="form-control" id="inputClub" name="club" required>
+              <option value="" selected disabled>Club</option>
+              <% clubs.forEach(function(club) { %>
+                <option value="<%- club.name %>"><%- club.name %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <!-- team number -->
+          <div class="col-xs-5 form-group">
+            <label for="inputTeamnr" class="sr-only">Team number</label>
+            <input type="text" id="inputTeamnr" name="teamnr" class="form-control" placeholder="Team number" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- match day -->
+          <div class="col-xs-7 form-group">
+            <label for="inputMatchday" class="sr-only">Match day</label>
+            <select id="inputMatchday" name="matchday" class="form-control" required >
+              <option value="" selected disabled>Match day</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
+          </div>
+          <!-- class -->
+          <div class="col-xs-5 form-group">
+            <label for="inputClass" class="sr-only">Class</label>
+            <select id="inputClass" name="class" class="form-control" required>
+              <option value="" selected disabled>Class</option>
+              <option value="1st top class">1st Top Class</option>
+              <option value="2nd top class">2nd Top Class</option>
+              <option value="3rd top class">3rd Top Class</option>
+              <option value="1st division">1st Division</option>
+              <option value="2nd division">2nd Division</option>
+              <option value="3rd division">3rd Division</option>
+              <option value="1st class">1st class</option>
+              <option value="2st class">1st class</option>
+              <option value="3st class">1st class</option>
+              <option value="4th class">4th class</option>
+              <option value="5th class">5th class</option>
+              <option value="6th class">6th class</option>
+              <option value="7th class">7th class</option>
+              <option value="8th class">8th class</option>
+              <option value="g class">G class</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- submit -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create team</button>
+      </form>
+    </container>
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+  </body>
+</hmtl>

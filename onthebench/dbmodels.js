@@ -10,7 +10,8 @@ var userSchema = new Schema({
   lastName: String,
   position: String,
   email: String,
-  password: String
+  password: String,
+  _teamId: { type: Schema.Types.ObjectId, ref: 'team' }
 }, { collection: 'Users' });
 var user = mongoose.model('user', userSchema);
 
@@ -23,7 +24,7 @@ var teamSchema = new Schema({
     type: String,
     enum: ["saturday", "sunday"]
   },
-  class: Number,
+  class: String,
   _captain: { type: Schema.Types.ObjectId, ref: 'user' },
   _clubId: { type: Schema.Types.ObjectId, ref: 'club' }
 }, { collection: 'Teams' });

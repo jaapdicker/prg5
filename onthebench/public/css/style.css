@@ -72,6 +72,9 @@ a.club-add {
 .form select {
   margin: 7px 0;
 }
+.form-team {
+  width: 400px;
+}
 /* listItems */
 .club,
 .team {

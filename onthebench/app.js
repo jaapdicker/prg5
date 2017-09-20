@@ -24,16 +24,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// routes
-app.use(require('./routes/index'));
-app.use(require('./routes/users'));
-app.use(require('./routes/login'));
-app.use(require('./routes/logout'));
-app.use(require('./routes/register'));
-app.use(require('./routes/profile'));
+// Routes
+app.use(require('./controllers/index'));
+app.use(require('./controllers/users'));
+app.use(require('./controllers/login'));
+app.use(require('./controllers/logout'));
+app.use(require('./controllers/register'));
+app.use(require('./controllers/profile'));
 
-app.use(require('./routes/clubCreate'));
-app.use(require('./routes/team'));
+app.use(require('./controllers/clubCreate'));
+app.use(require('./controllers/team'));
 
 
 // catch 404 and forward to error handler
