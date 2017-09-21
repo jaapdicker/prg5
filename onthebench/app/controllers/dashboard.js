@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
   var session = req.cookies['session'];
 
   var showClubs = function(err, data) {
-    res.render('index', {
+    res.render('dashboard', {
       profile: session.user,
       clubs: data.data.clubs,
       teams: [],
@@ -25,35 +25,8 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  // dbmodels.club.find({
-  //   name: {
-  //     "$regex": req.body.search,
-  //     "$options": "i"
-  //   }
-  // }, function(err, clubs) {
-  //   if(err) {
-  //     res.render('index', {
-  //       profile: req.cookies['session'].user,
-  //       clubs: [],
-  //       teams: [],
-  //       search: req.body.search
-  //     });
-  //   }
-
-  //   dbmodels.team.find({ _clubId: clubs[0]._id }, function(err, teams) {
-  //     res.render('index', {
-  //       profile: req.cookies['session'].user,
-  //       clubs: clubs,
-  //       teams: teams,
-  //       search: req.body.search
-  //     });
-  //   });
-  // });
-
-  console.log(req.body.search);
-
   var showSearchResults = function(err, data) {
-    res.render('index', {
+    res.render('dashboard', {
       profile: req.cookies['session'].user,
       clubs: data.data.clubs,
       teams: data.data.teams,

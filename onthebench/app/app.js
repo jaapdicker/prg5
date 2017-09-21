@@ -25,8 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use(require('./controllers/index'));
-app.use(require('./controllers/users'));
+app.use(require('./controllers/dashboard'));
+// app.use(require('./controllers/users'));
 app.use(require('./controllers/login'));
 app.use(require('./controllers/logout'));
 app.use(require('./controllers/register'));
