@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var _ = require('underscore');
 // var expressValidator = require('express-validator');
 
 // create app
@@ -55,3 +56,5 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// test123 hash: $2a$10$kJL/QHSNjkpBPTf0EebALOYIZzuVqGJJinZljLXbDOeqTWRWYMxK.

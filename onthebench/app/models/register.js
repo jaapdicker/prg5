@@ -32,6 +32,4 @@ register.prototype.register = function(model, user, callback) {
   })
 }
 
-// update function
-
 module.exports = register;

@@ -13,7 +13,7 @@
       <a class="navbar-brand" href="/">ONTHEBENCH</a>
 
       <h4 class="navbar-nav navbar-right">
-        <%= profile.fullName %>
+        <%- profile.firstName %>&nbsp;<%- profile.lastName %>
         <a href="/profile" class="fa fa-cogs no-hover"></a>
       </h4>
     </nav>
@@ -29,34 +29,34 @@
 
         <!-- first name -->
         <label for="inputFirstName" class="sr-only">First name</label>
-        <input type="text" id="inputFirstName" name="firstName" class="form-control" placeholder="First name" required autofocus />
+        <input type="text" id="inputFirstName" name="firstName" class="form-control" value="<%- profile.firstName ? profile.firstName : '' %>" placeholder="First name" required autofocus />
 
         <!-- last name -->
         <label for="inputLastName" class="sr-only">Last name</label>
-        <input type="text" id="inputLastName" name="lastName" class="form-control" placeholder="Last name" required />
+        <input type="text" id="inputLastName" name="lastName" class="form-control" value="<%- profile.lastName ? profile.lastName : '' %>" placeholder="Last name" required />
 
         <!-- position -->
         <label for="inputPosition" class="sr-only">Position</label>
         <select class="form-control" id="inputPosition" name="position" required>
-          <option value="" selected disabled>Position</option>
-          <option value="bench">Bench heater</option>
-          <option value="striker">Striker</option>
-          <option value="midfielder">Midfielder</option>
-          <option value="defender">Defender</option>
-          <option value="keeper">Keeper</option>
+          <option value="" selected="<%- !profile.position ? true : false %>" disabled>Position</option>
+          <option value="bench" selected="<%- profile.position === 'bench' ? true : false %>">Bench heater</option>
+          <option value="striker" selected="<%- profile.position === 'striker' ? true : false %>">Striker</option>
+          <option value="midfielder" selected="<%- profile.position === 'midfielder' ? true : false %>">Midfielder</option>
+          <option value="defender" selected="<%- profile.position === 'defender' ? true : false %>">Defender</option>
+          <option value="keeper" selected="<%- profile.position === 'keeper' ? true : false %>">Keeper</option>
         </select>
 
         <!-- email -->
         <label for="inputEmail" class="sr-only">Email</label>
-        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required  />
+        <input type="email" id="inputEmail" name="email" class="form-control" value="<%- profile.email ? profile.email : '' %>" placeholder="Email" required  />
 
         <!-- password -->
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required />
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" />
 
         <!-- password confirm -->
         <label for="inputPasswordConfirm" class="sr-only">Password Confirm</label>
-        <input type="password" id="inputPasswordConfirm" name="passwordConfirm–" class="form-control" placeholder="Password confirm" required />
+        <input type="password" id="inputPasswordConfirm" name="passwordConfirm–" class="form-control" placeholder="Password confirm" />
 
         <!-- submit -->
         <button class="btn btn-lg btn-primary btn-block" type="submit">Save profile</button>

@@ -34,18 +34,19 @@ router.post('/login', function (req, res) {
 
     // create readable profile
     var cookieUser = {
-        id: user._id,
-        fullName: user.firstName + ' ' + user.lastName,
-        email: user.email,
-        position: user.position
-      };
-      // set login cookie
-      res.cookie('session', {
-        user: cookieUser,
-        loggedIn: true,
-      });
-      // redirect to index
-      res.redirect('/');
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      position: user.position
+    };
+    // set login cookie
+    res.cookie('session', {
+      user: cookieUser,
+      loggedIn: true,
+    });
+    // redirect to index
+    res.redirect('/');
   }
 
   login.prototype.login(dbmodels.user, {

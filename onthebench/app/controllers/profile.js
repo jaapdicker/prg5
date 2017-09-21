@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
+var profile = require('../models/profile');
 
 // get profile page
-router.get('/profile', function(req, res) {
+router.get('/profile', function (req, res) {
   var session = req.cookies['session'];
 
   if (session && !session.loggedIn) res.redirect('/login');
-
   res.render('profile', {
     profile: session.user,
     message: {},
@@ -15,11 +15,11 @@ router.get('/profile', function(req, res) {
 });
 
 // post profile update
-router.post('/profile', function(req, res) {
+router.post('/profile', function (req, res) {
   var userId = req.cookies['session'].user.id;
 
-  // find only user and update
-  dbmodels.user.findOneAndUpdate({ _id: userId }, req.body, function(err, profile) {
+  // find only user and update (findOneAndUpdate not possible with password hashing)
+  var updating = function (err, data) {
     if(err) {
       res.render('profile', {
         profile: req.cookies['session'].user,
@@ -27,15 +27,31 @@ router.post('/profile', function(req, res) {
           text: err
         }
       });
+      return false;
     }
 
+    // update session cookie
+    var user = data.data.profile;
+    var cookieUser = {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      position: user.position
+    };
+    res.cookie('session', {
+      user: cookieUser,
+      loggedIn: true,
+    });
     res.render('profile', {
-      profile: req.cookies['session'].user,
+      profile: user,
       message: {
         text: "Profile updated"
       }
     });
-  });
+  }
+
+  profile.prototype.update(dbmodels.user, userId, req.body, updating);
 });
 
 module.exports = router;
