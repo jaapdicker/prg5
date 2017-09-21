@@ -4,7 +4,7 @@ var dbmodels = require('../dbmodels');
 var login = require('../models/login');
 
 // get login
-router.get('/login', function(req, res) {
+router.get('/login', function (req, res) {
   var session = req.cookies['session'];
 
   if (session && session.loggedIn) res.redirect('/');
@@ -16,16 +16,17 @@ router.get('/login', function(req, res) {
 });
 
 // post login
-router.post('/login', function(req, res) {
+router.post('/login', function (req, res) {
 
-  var logginIn = function(err, data) {
-    var user = data.data.profile
+  var logginIn = function (err, data) {
+    var user = data ? data.data.profile : false;
+
     // show error message
     if (!user) {
       res.render('login', {
         menuitems: ["register", "login"],
         error: {
-          message: "Het email of wachtwoord is verkeerd"
+          message: "Either email or password is invalid"
         }
       });
       return false;

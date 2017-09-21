@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
+var register = require('../models/register');
 
 // get register
-router.get('/register', function(req, res) {
+router.get('/register', function (req, res) {
   var session = req.cookies['session'];
 
-  if (session && session.loggedIn) {
-    res.redirect('/');
-  }
+  if (session && session.loggedIn) res.redirect('/');
   res.render('register', {
     menuitems: ["register", "login"],
     error: {}
@@ -16,46 +15,26 @@ router.get('/register', function(req, res) {
 });
 
 // post register
-router.post('/register', function(req, res) {
-  // check if email exists
-  dbmodels.user.find({
-    email: req.body.email
-  }, function(err, user) {
-    if (err) {
-      console.log('ERROR', err);
-      res.render('register', {
-        menuitems: ["register", "login"],
-        error: {
-          message: err
-        }
-      });
-    } else if (user.length === 0) {
-      // save new user if email is not already used
-      var user = new dbmodels.user(req.body);
-      user.save(function(err, user) {
-        if (err) {
-          console.log('errors', err);
-          res.render('register', {
-            menuitems: ["register", "login"],
-            error: {
-              message: err
-            }
-          });
-        }
-      });
+router.post('/register', function (req, res) {
 
-      // redirect to index
-      res.redirect('/');
-    } else {
-      // show error message
+  var registering = function (err, data) {
+    if (!data) {
       res.render('register', {
         menuitems: ["register", "login"],
         error: {
-          message: 'Email is already in use'
+          message: "Email is already in use"
         }
       });
+      return false;
     }
-  });
+    res.render('login', {
+      menuitems: ["register", "login"],
+      error: {}
+    });
+  }
+
+  register.prototype.register(dbmodels.user, req.body, registering);
+
 });
 
 module.exports = router;

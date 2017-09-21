@@ -17,13 +17,17 @@ login.prototype.set = function(prop, value) {
 
 // login function
 login.prototype.login = function(model, credentials, callback) {
+
   model.findOne({
-    email: credentials.email,
-    password: credentials.password
+    email: credentials.email
   }, function(err, profile) {
     if (err) return callback(err);
-    callback(null, new login({ profile: profile }));
-  })
+    profile.verifyPassword(credentials.password, function(err, isMatch) {
+      if (err || !isMatch) return callback(err);
+      callback(null, new login({ profile: profile }));
+    })
+  });
+
 }
 
 module.exports = login;

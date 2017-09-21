@@ -1,30 +1,22 @@
 var mongoose = require('./helpers/databaseHelper');
+var bcrypt = require('bcrypt');
 
 var Schema = mongoose.Schema,
+    SALT_WORK_FACTOR = 10,
     ObjectId = Schema.ObjectId;
 
-// user
-var userSchema = new Schema({
-  id: ObjectId,
-  firstName: String,
-  lastName: String,
-  position: String,
-  email: String,
-  password: String,
-  _teamId: { type: Schema.Types.ObjectId, ref: 'team' }
-}, { collection: 'Users' });
-var user = mongoose.model('user', userSchema);
 
+// All schema's
 
 // team
 var teamSchema = new Schema({
   id: ObjectId,
-  name: String,
+  name: { type: String, required: true },
   matchday: {
-    type: String,
+    type: { type: String, required: true },
     enum: ["saturday", "sunday"]
   },
-  class: String,
+  class: { type: String, required: true },
   _captain: { type: Schema.Types.ObjectId, ref: 'user' },
   _clubId: { type: Schema.Types.ObjectId, ref: 'club' }
 }, { collection: 'Teams' });
@@ -43,37 +35,12 @@ var user_eventSchema = new Schema({
 });
 var user_event = mongoose.model('player', user_eventSchema);
 
-// role tabel
-// id
-// name
-//
-// (Bijv: 1, player.  2, captain)
-
-// koppeltabel user / role
-// id
-// user_id
-// team_id
-//
-// (Bijv: 1, 10, 1)
-// ^ In dit geval zit dus user 10 in team 1,
-// user heeft dan een rol: player (of captain) dat staat los van deze tabel
-
-
-// koppetabel user / event
-// id
-// user_id
-// event_id
-//
-// (Bijv: 1, 10, 5)
-// ^ In dit geval zit user 10 in event 5, event 5 is bijvoorbeeld een training of wedstrijd
-// En je kan vanuiter user_id=10 ophalen welke rol hij heeft binnen welk team
-
 // event
 var eventSchema = new Schema({
   id: ObjectId,
-  type: String,
-  name: String,
-  date: Date,
+  type: { type: String, required: true },
+  name: { type: String, required: true },
+  date: { type: Date, required: true },
   location: String,
   team: [{ type: Schema.Types.ObjectId, ref: 'team' }],
 }, { collection: 'Events' });
@@ -82,10 +49,10 @@ var event = mongoose.model('event', eventSchema);
 // club
 var clubSchema = new Schema({
   id: ObjectId,
-  name: String,
-  address: String,
-  city: String,
-  postal: String
+  name: { type: String, required: true },
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  postal: { type: String, required: true },
 }, { collection: 'Clubs' });
 var club = mongoose.model('club', clubSchema);
 
@@ -95,6 +62,49 @@ var club_teamSchema = new Schema({
   teamId: [{ type: Schema.Types.ObjectId, ref: 'team' }]
 });
 var club_team = mongoose.model('event', eventSchema);
+
+// user
+var userSchema = new Schema({
+  id: ObjectId,
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  position: { type: String, required: true },
+  email: { type: String, required: true, index: { unique: true } },
+  password: { type: String, required: true },
+  _teamId: { type: Schema.Types.ObjectId, ref: 'team' }
+}, { collection: 'Users' });
+
+// hash user password
+userSchema.pre('save', function(next) {
+  var user = this;
+
+  // only hash password if new or modified
+  if (!user.isModified('password')) return next();
+
+  // generate a salt
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) return next(err);
+
+    // hash password
+    bcrypt.hash(user.password, salt, function(err, hash) {
+      if (err) return next(err);
+
+      // replace with hash
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+// verify input password with hashed password
+userSchema.methods.verifyPassword = function(candidatePassword, callback) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return callback(err);
+        callback(null, isMatch);
+    });
+};
+
+var user = mongoose.model('user', userSchema);
 
 var dbmodels = {
   club: club,
