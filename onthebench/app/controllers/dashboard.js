@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var dbmodels = require('../dbmodels');
+var dbdashboards = require('../dbmodels');
 var dashboard = require('../models/dashboard');
 
 // get index
@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
 
   // check if already logged in
   if (session && session.loggedIn) {
-    dashboard.prototype.showClubs(dbmodels.club, {}, showClubs);
+    dashboard.prototype.showClubs(dbdashboards.club, {}, showClubs);
   } else {
     res.redirect('/login');
   }
@@ -34,12 +34,11 @@ router.post('/', function(req, res) {
     });
   }
 
-  dashboard.prototype.search(dbmodels, {
+  dashboard.prototype.search(dbdashboards, {
     name: {
       "$regex": req.body.search,
       "$options": "i"
     }}, showSearchResults);
-
 });
 
 module.exports = router;

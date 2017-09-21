@@ -19,7 +19,7 @@ dashboard.prototype.set = function (prop, value) {
 dashboard.prototype.showClubs = function (model, searchQuery, callback) {
   model.find(searchQuery, function(err, clubs) {
     if (err) return callback(err);
-    callback(null, new dashboard({clubs: clubs}));
+    callback(null, new dashboard({ clubs: clubs }));
   });
 }
 
