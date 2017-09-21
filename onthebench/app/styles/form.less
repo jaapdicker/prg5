@@ -2,30 +2,36 @@
 .form {
   width: 250px;
   margin: auto;
+
+  input, select {
+    margin: 7px 0;
+  }
+
+  button:hover {
+    color: @primary;
+    background-color: #fff;
+    border-color: @primary;
+  }
 }
 
 .form-inline.form-club-search {
   margin: 36px auto;
   width: 75%;
-}
 
-.form-inline.form-club-search .form-control {
-  display: inline-block !important;
-  width: 79.5%;
-}
+  .form-control {
+    display: inline-block !important;
+    width: 79.5%;
+  }
 
-.form-inline.form-club-search button {
-  margin-top: -1px;
-  width: 20%;
-}
+  button {
+    margin-top: -1px;
+    width: 20%;
+  }
 
-.form-inline.form-club-search button:hover {
-  color: #fff;
-  background-color: @primary;
-}
-
-.form input, .form select {
-  margin: 7px 0;
+  button:hover {
+    color: #fff;
+    background-color: @primary;
+  }
 }
 
 .form-team {

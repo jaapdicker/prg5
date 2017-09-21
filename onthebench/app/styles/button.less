@@ -8,7 +8,14 @@
 .btn-inverted.btn-primary {
   background-color: transparent;
   border-color: @primary;
-  color: @primary;
+  .fa {
+    color: @primary;
+  }
+  &:hover {
+    .fa {
+      color: #fff;
+    }
+  }
 }
 
 a.club-add {
@@ -24,6 +31,8 @@ a.club-add {
   text-decoration: none;
 }
 
-.club-add:hover .fa {
-  color: @primary;
+.club-add:hover {
+  .fa {
+    color: @primary;
+  }
 }

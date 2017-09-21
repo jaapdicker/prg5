@@ -33,7 +33,12 @@ hr {
 .btn-inverted.btn-primary {
   background-color: transparent;
   border-color: #219351;
+}
+.btn-inverted.btn-primary .fa {
   color: #219351;
+}
+.btn-inverted.btn-primary:hover .fa {
+  color: #fff;
 }
 a.club-add {
   width: 100%;
@@ -55,6 +60,15 @@ a.club-add {
   width: 250px;
   margin: auto;
 }
+.form input,
+.form select {
+  margin: 7px 0;
+}
+.form button:hover {
+  color: #219351;
+  background-color: #fff;
+  border-color: #219351;
+}
 .form-inline.form-club-search {
   margin: 36px auto;
   width: 75%;
@@ -70,10 +84,6 @@ a.club-add {
 .form-inline.form-club-search button:hover {
   color: #fff;
   background-color: #219351;
-}
-.form input,
-.form select {
-  margin: 7px 0;
 }
 .form-team {
   width: 400px;
@@ -110,28 +120,29 @@ a.club-add {
   border-radius: 0;
 }
 .navbar a {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar a:hover {
-  background-color: #ffffff;
+  background-color: #fff;
   color: #219351;
 }
-.navbar-nav {
+.navbar .navbar-nav {
   min-width: 150px;
   margin-right: 0;
   float: right;
 }
-.navbar-nav.navbar-right {
+.navbar .navbar-nav .nav-item {
+  display: inline-flex;
+}
+.navbar .navbar-nav.navbar-right {
   text-align: right;
   margin-right: 15px;
   line-height: 50px;
 }
-.navbar-nav.navbar-right a {
+.navbar .navbar-nav.navbar-right a {
   text-decoration: none;
 }
-.navbar-nav .nav-item {
-  display: inline-flex;
-}
-.navbar-nav.navbar-right a.no-hover:hover {
+.navbar .navbar-nav.navbar-right a.no-hover:hover {
   background-color: transparent;
+  color: inherit;
 }
