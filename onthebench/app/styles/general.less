@@ -1,22 +1,24 @@
 /* GENERAL */
-
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #219351;
+  color: @primary;
 }
 
 hr {
-  border-color: #ccc;
-  color: #ccc;
-  background-color: #ccc;
+  border-color: @lightGrey;
+  color: @lightGrey;
+  background-color: @lightGrey;
 }
 
 .content {
   width: 75%;
   margin: 0 auto;
+  h4 {
+    margin-top: 36px;
+  }
 }
 
 .centered {
@@ -25,5 +27,5 @@ hr {
 }
 
 .fa {
-  color: #333;
+  color: @defaultTextColor;
 }

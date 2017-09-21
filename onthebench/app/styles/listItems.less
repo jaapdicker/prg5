@@ -1,25 +1,26 @@
 /* listItems */
-.club, .team {
+.dashboardItem {
   margin: 7px auto;
-  border: 1px solid #ccc;
+  border: 1px solid @lightGrey;
   border-radius: 5px;
   line-height: 50px;
   padding: 7px;
 }
 
-.club *, .club-add *, .team * {
+.dashboardItem *, .club-add * {
   display: inline;
   vertical-align: middle;
 }
 
-.club .fa, .team .fa {
+.dashboardItem .fa {
   margin: 0 15px;
   font-size: 24px;
-  color: #333;
+  color: @defaultTextColor;
 }
 
-.club .fa:hover, .team .fa:hover {
+.dashboardItem .fa:hover {
   text-decoration: none;
+  color: @primary;
 }
 
 .fa.right-aligned {

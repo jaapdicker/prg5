@@ -30,27 +30,25 @@
         </form>
         <div class="content">
           <% if(search !== "") { %>
-            <div class="centered">
-              <a href="/team-new" class="club-add">Start a new team <div class="fa fa-plus-square-o"></div></a>
-            </div>
             <p>Searched for: <%- search %></p>
           <% } %>
           <% if(clubs.length > 0) { %>
             <h4>Clubs:</h4>
             <% clubs.forEach(function(club) { %>
-              <div class="club">
+              <div class="dashboardItem">
                 <div class="fa fa-soccer-ball-o"></div>
                 <h3><%- club.name %></h3>
+                <a href="/team-new" class="fa fa-angle-right right-aligned"></a>
               </div>
             <% }) %>
           <% } %>
           <% if(teams.length != 0) { %>
             <h4>Teams:</h4>
             <% teams.forEach(function(team) { %>
-              <div class="club">
+              <div class="dashboardItem">
                 <div class="fa fa-soccer-ball-o"></div>
                 <h3><%- team.name %></h3>
-                <a href="/team" class="fa fa-angle-right right-aligned"></a>
+                <a href="/team" class="fa fa-plus-square-o right-aligned"></a>
               </div>
             <% }) %>
           <% } %>

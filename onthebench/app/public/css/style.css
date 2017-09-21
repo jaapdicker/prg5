@@ -14,6 +14,9 @@ hr {
   width: 75%;
   margin: 0 auto;
 }
+.content h4 {
+  margin-top: 36px;
+}
 .centered {
   text-align: center;
   margin: 0 auto;
@@ -29,8 +32,8 @@ hr {
 }
 .btn-inverted.btn-primary {
   background-color: transparent;
-  border-color: #27ae60;
-  color: #27ae60;
+  border-color: #219351;
+  color: #219351;
 }
 a.club-add {
   width: 100%;
@@ -45,7 +48,7 @@ a.club-add {
   text-decoration: none;
 }
 .club-add:hover .fa {
-  color: #27ae60;
+  color: #219351;
 }
 /* FORM */
 .form {
@@ -66,7 +69,7 @@ a.club-add {
 }
 .form-inline.form-club-search button:hover {
   color: #fff;
-  background-color: #27ae60;
+  background-color: #219351;
 }
 .form input,
 .form select {
@@ -76,29 +79,26 @@ a.club-add {
   width: 400px;
 }
 /* listItems */
-.club,
-.team {
+.dashboardItem {
   margin: 7px auto;
   border: 1px solid #ccc;
   border-radius: 5px;
   line-height: 50px;
   padding: 7px;
 }
-.club *,
-.club-add *,
-.team * {
+.dashboardItem *,
+.club-add * {
   display: inline;
   vertical-align: middle;
 }
-.club .fa,
-.team .fa {
+.dashboardItem .fa {
   margin: 0 15px;
   font-size: 24px;
   color: #333;
 }
-.club .fa:hover,
-.team .fa:hover {
+.dashboardItem .fa:hover {
   text-decoration: none;
+  color: #219351;
 }
 .fa.right-aligned {
   float: right;
@@ -114,7 +114,7 @@ a.club-add {
 }
 .navbar a:hover {
   background-color: #ffffff;
-  color: #27ae60;
+  color: #219351;
 }
 .navbar-nav {
   min-width: 150px;
