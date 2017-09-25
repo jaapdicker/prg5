@@ -3,20 +3,20 @@ var login = function (data) {
 }
 
 //  create data object
-login.prototype.data = {};
+login.data = {};
 
 // get function
-login.prototype.get = function (prop) {
+login.get = function (prop) {
   return this.data[prop];
 }
 
 // set function
-login.prototype.set = function(prop, value) {
+login.set = function(prop, value) {
   this.data[prop] = value;
 }
 
 // login function
-login.prototype.login = function(model, credentials, callback) {
+login.login = function(model, credentials, callback) {
 
   model.findOne({
     email: credentials.email

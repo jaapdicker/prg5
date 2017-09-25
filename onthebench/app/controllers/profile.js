@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
-var profile = require('../models/profile');
+var model = require('../models/profile');
 
 // get profile page
 router.get('/profile', function (req, res) {
@@ -51,7 +51,7 @@ router.post('/profile', function (req, res) {
     });
   }
 
-  profile.prototype.update(dbmodels.user, userId, req.body, updating);
+  model.update(dbmodels.user, userId, req.body, updating);
 });
 
 module.exports = router;

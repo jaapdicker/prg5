@@ -1,16 +1,18 @@
 var express = require('express');
 var router = express.Router();
-var dbdashboards = require('../dbmodels');
-var dashboard = require('../models/dashboard');
+var dbmodels = require('../dbmodels');
+var model = require('../models/dashboard');
 
 // get index
 router.get('/', function(req, res) {
   var session = req.cookies['session'];
 
-  var showClubs = function(err, data) {
+  var showDashboard = function (err, data) {
+    res.cookie('divisions', { divisions: data.data.divisions });
     res.render('dashboard', {
       profile: session.user,
       clubs: data.data.clubs,
+      divisions: data.data.divisions,
       teams: [],
       search: ""
     });
@@ -18,7 +20,7 @@ router.get('/', function(req, res) {
 
   // check if already logged in
   if (session && session.loggedIn) {
-    dashboard.prototype.showClubs(dbdashboards.club, {}, showClubs);
+    model.fetchDashboard(dbmodels, {}, showDashboard);
   } else {
     res.redirect('/login');
   }
@@ -29,12 +31,13 @@ router.post('/', function(req, res) {
     res.render('dashboard', {
       profile: req.cookies['session'].user,
       clubs: data.data.clubs,
+      divisions: req.cookies['divisions'].divisions,
       teams: data.data.teams,
-      search: req.body.search
+      search: req.body ? req.body.search : ""
     });
   }
 
-  dashboard.prototype.search(dbdashboards, {
+  model.search(dbmodels, {
     name: {
       "$regex": req.body.search,
       "$options": "i"

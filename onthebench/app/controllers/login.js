@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
-var login = require('../models/login');
+var model = require('../models/login');
 
 // get login
 router.get('/login', function (req, res) {
@@ -49,7 +49,7 @@ router.post('/login', function (req, res) {
     res.redirect('/');
   }
 
-  login.prototype.login(dbmodels.user, {
+  model.login(dbmodels.user, {
     email: req.body.email,
     password: req.body.password
   }, logginIn);

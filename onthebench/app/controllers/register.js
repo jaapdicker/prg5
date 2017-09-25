@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
-var register = require('../models/register');
+var model = require('../models/register');
 
 // get register
 router.get('/register', function (req, res) {
@@ -33,7 +33,7 @@ router.post('/register', function (req, res) {
     });
   }
 
-  register.prototype.register(dbmodels.user, req.body, registering);
+  model.register(dbmodels.user, req.body, registering);
 
 });
 

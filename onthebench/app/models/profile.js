@@ -5,20 +5,20 @@ var profile = function (data) {
 }
 
 // create data object
-profile.prototype.data = {}
+profile.data = {}
 
 // get function
-profile.prototype.get = function (prop) {
+profile.get = function (prop) {
   return this.data[prop];
 }
 
 // set function
-profile.prototype.set = function(prop, value) {
+profile.set = function(prop, value) {
   this.data[prop] = value;
 }
 
 // update function
-profile.prototype.update = function(model, id, data, callback) {
+profile.update = function(model, id, data, callback) {
 
   model.findById(id, function(err, user) {
     if (err) return callback(err);

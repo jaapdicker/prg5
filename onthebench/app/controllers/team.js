@@ -2,6 +2,12 @@ var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
 
+
+// rewrite with model
+
+
+
+
 // get team page
 router.get('/team', function(req, res) {
   var session = req.cookies['session'];
@@ -24,11 +30,15 @@ router.get('/team-new', function(req, res) {
 
   dbmodels.club.find({}, function(err, clubs) {
     res.cookie('clubs', clubs);
-    res.render('team-new', {
-      profile: session.user,
-      clubs: clubs,
-      message: {}
-    })
+    dbmodels.division.find({}, function(err, divisions) {
+      res.cookie('divisions', divisions)
+      res.render('team-new', {
+        profile: session.user,
+        clubs: clubs,
+        divisions: divisions,
+        message: {}
+      })
+    });
   });
 });
 
