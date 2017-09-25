@@ -24,7 +24,13 @@
         <form method="post" action="/" class="form form-inline form-club-search">
           <h2 class="form-heading form-club-search-heading">Search for a club</h2>
           <label for="clubSearchInput" class="sr-only">Search for a club</label>
-          <input type="text" id="clubSearchInput" name="search" class="form-control" placeholder="search" required />
+          <input type="text" id="clubSearchInput" name="search" class="form-control" placeholder="search" />
+          <select id="divisionSearchSelect" name="class" class="form-control select">
+              <option value="" selected disabled>Class</option>
+              <% divisions.forEach(function(division) { %>
+                <option value="<%- division.name %>"><%- division.name %></option>
+              <% }) %>
+            </select>
           <button type="submit" class="btn btn-inverted btn-primary"><div class="fa fa-search"></div></button>
           <hr />
         </form>

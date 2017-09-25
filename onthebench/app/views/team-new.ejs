@@ -62,21 +62,9 @@
             <label for="inputClass" class="sr-only">Class</label>
             <select id="inputClass" name="class" class="form-control" required>
               <option value="" selected disabled>Class</option>
-              <option value="1st top class">1st Top Class</option>
-              <option value="2nd top class">2nd Top Class</option>
-              <option value="3rd top class">3rd Top Class</option>
-              <option value="1st division">1st Division</option>
-              <option value="2nd division">2nd Division</option>
-              <option value="3rd division">3rd Division</option>
-              <option value="1st class">1st class</option>
-              <option value="2nd class">2nd class</option>
-              <option value="3rd class">3rd class</option>
-              <option value="4th class">4th class</option>
-              <option value="5th class">5th class</option>
-              <option value="6th class">6th class</option>
-              <option value="7th class">7th class</option>
-              <option value="8th class">8th class</option>
-              <option value="g class">G class</option>
+              <% divisions.forEach(function(division) { %>
+                <option value="<%- division.name %>"><%- division.name %></option>
+              <% }) %>
             </select>
           </div>
         </div>

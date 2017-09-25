@@ -75,7 +75,10 @@ a.club-add {
 }
 .form-inline.form-club-search .form-control {
   display: inline-block !important;
-  width: 79.5%;
+  width: 59%;
+}
+.form-inline.form-club-search .select {
+  width: 20%;
 }
 .form-inline.form-club-search button {
   margin-top: -1px;
