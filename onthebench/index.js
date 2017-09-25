@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app/app');
+var app = require('./app/app');
 var debug = require('debug')('onthebench:server');
 var http = require('http');
 

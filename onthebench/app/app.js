@@ -34,6 +34,7 @@ app.use(require('./controllers/register'));
 app.use(require('./controllers/profile'));
 
 app.use(require('./controllers/clubCreate'));
+app.use(require('./controllers/divisionCreate'));
 app.use(require('./controllers/team'));
 
 

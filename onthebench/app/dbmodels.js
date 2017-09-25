@@ -22,6 +22,13 @@ var teamSchema = new Schema({
 }, { collection: 'Teams' });
 var team = mongoose.model('team', teamSchema);
 
+// team classes
+var divisionSchema = new Schema({
+  id: ObjectId,
+  name: { type: String, required: true },
+});
+var division = mongoose.model('division', divisionSchema)
+
 // binding model user - event
 var user_eventSchema = new Schema({
   id: ObjectId,
@@ -108,6 +115,7 @@ var user = mongoose.model('user', userSchema);
 
 var dbmodels = {
   club: club,
+  division: division,
   event: event,
   team: team,
   user: user,
