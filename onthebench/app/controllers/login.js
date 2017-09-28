@@ -5,14 +5,10 @@ var model = require('../models/login');
 
 // get login
 router.get('/login', function (req, res) {
-  var session = req.cookies['session'];
-
-  if (session && session.loggedIn) res.redirect('/');
   res.render('login', {
     menuitems: ["register", "login"],
     error: {}
   });
-
 });
 
 // post login

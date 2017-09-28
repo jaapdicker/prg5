@@ -9,14 +9,7 @@
   </head>
   <body>
 
-    <nav class="navbar bg-primary fixed-top">
-      <a class="navbar-brand" href="/">ONTHEBENCH</a>
-
-      <h4 class="navbar-nav navbar-right">
-        <%- profile.firstName %>&nbsp;<%- profile.lastName %>
-        <a href="/profile" class="fa fa-cogs no-hover"></a>
-      </h4>
-    </nav>
+    <%- include partials/nav.ejs %>
 
     <container>
       <form method="post" action="/profile" class="form form-profile">

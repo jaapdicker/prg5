@@ -1,4 +1,4 @@
-// includes
+// Includes
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,12 +11,12 @@ var _ = require('underscore');
 // create app
 var app = express();
 
-// configs
+// Configs
 app.set('case sensitive routing', false);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// middlewares
+// Middlewares
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -26,36 +26,47 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use(require('./controllers/dashboard'));
-// app.use(require('./controllers/users'));
+// preload non auth controllers
 app.use(require('./controllers/login'));
-app.use(require('./controllers/logout'));
 app.use(require('./controllers/register'));
+
+// check if logged in
+app.use(function(req, res, next) {
+  if (!req.cookies['session']) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+});
+
+// load all other controllers
+app.use(require('./controllers/logout'));
+app.use(require('./controllers/dashboard'));
 app.use(require('./controllers/profile'));
+app.use(require('./controllers/event'));
+
+app.use(require('./controllers/team'));
 
 app.use(require('./controllers/clubCreate'));
 app.use(require('./controllers/divisionCreate'));
-app.use(require('./controllers/team'));
 
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Render the error page
   res.status(err.status || 500);
   res.render('error');
 });
 
 module.exports = app;
-
-// test123 hash: $2a$10$kJL/QHSNjkpBPTf0EebALOYIZzuVqGJJinZljLXbDOeqTWRWYMxK.

@@ -3,20 +3,20 @@ var register = function (data) {
 }
 
 // create data object
-register.prototype.data = {}
+register.data = {}
 
 // get function
-register.prototype.get = function (prop) {
+register.get = function (prop) {
   return this.data[prop];
 }
 
 // set function
-register.prototype.set = function(prop, value) {
+register.set = function(prop, value) {
   this.data[prop] = value;
 }
 
 // register function
-register.prototype.register = function(model, user, callback) {
+register.register = function(model, user, callback) {
   var userData = user;
   model.find({
     email: user.email,

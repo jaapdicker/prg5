@@ -19,6 +19,7 @@ gulp.task('watch-less', function() {
 gulp.task('serve', function() {
   browserSync.init({
     port:3001,
+    open: false,
     notify: false,
     proxy: {
       target: "localhost:3000",

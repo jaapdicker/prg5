@@ -7,9 +7,9 @@ var model = require('../models/profile');
 router.get('/profile', function (req, res) {
   var session = req.cookies['session'];
 
-  if (session && !session.loggedIn) res.redirect('/login');
   res.render('profile', {
     profile: session.user,
+    menuitems: [],
     message: {},
   });
 });
@@ -23,6 +23,7 @@ router.post('/profile', function (req, res) {
     if(err) {
       res.render('profile', {
         profile: req.cookies['session'].user,
+        menuitems: [],
         message: {
           text: err
         }
@@ -45,6 +46,7 @@ router.post('/profile', function (req, res) {
     });
     res.render('profile', {
       profile: user,
+      menuitems: [],
       message: {
         text: "Profile updated"
       }

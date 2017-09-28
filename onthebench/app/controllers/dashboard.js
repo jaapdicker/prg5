@@ -14,16 +14,12 @@ router.get('/', function(req, res) {
       clubs: data.data.clubs,
       divisions: data.data.divisions,
       teams: [],
-      search: ""
+      search: "",
+      menuitems: []
     });
   }
 
-  // check if already logged in
-  if (session && session.loggedIn) {
-    model.fetchDashboard(dbmodels, {}, showDashboard);
-  } else {
-    res.redirect('/login');
-  }
+  model.fetchDashboard(dbmodels, {}, showDashboard);
 });
 
 router.post('/', function(req, res) {
@@ -33,7 +29,8 @@ router.post('/', function(req, res) {
       clubs: data.data.clubs,
       divisions: req.cookies['divisions'].divisions,
       teams: data.data.teams,
-      search: req.body ? req.body.search : ""
+      search: req.body ? req.body.search : "",
+      menuitems: []
     });
   }
 

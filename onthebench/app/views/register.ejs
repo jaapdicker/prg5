@@ -9,14 +9,7 @@
   </head>
   <body>
 
-    <nav class="navbar bg-primary fixed-top">
-      <a class="navbar-brand" href="/">ONTHEBENCH</a>
-      <ul class="nav navbar-nav">
-        <% for(var i = 0; i < menuitems.length; i++) { %>
-          <li class="nav-item"><a href="<%= menuitems[i] %>"><%= menuitems[i] %></a></li>
-        <% } %>
-      </ul>
-    </nav>
+    <%- include partials/nav.ejs %>
 
     <container>
       <form method="post" action="/register" class="form form-register">

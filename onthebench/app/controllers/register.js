@@ -7,7 +7,6 @@ var model = require('../models/register');
 router.get('/register', function (req, res) {
   var session = req.cookies['session'];
 
-  if (session && session.loggedIn) res.redirect('/');
   res.render('register', {
     menuitems: ["register", "login"],
     error: {}
@@ -17,6 +16,7 @@ router.get('/register', function (req, res) {
 // post register
 router.post('/register', function (req, res) {
 
+  // callback function
   var registering = function (err, data) {
     if (!data) {
       res.render('register', {
@@ -33,6 +33,7 @@ router.post('/register', function (req, res) {
     });
   }
 
+  // do register
   model.register(dbmodels.user, req.body, registering);
 
 });

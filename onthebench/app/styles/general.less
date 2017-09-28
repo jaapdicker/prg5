@@ -1,10 +1,18 @@
 /* GENERAL */
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: @defaultTextColor;
 }
 
 a {
   color: @primary;
+  &.fa:hover {
+    text-decoration: none;
+  }
 }
 
 hr {
@@ -13,9 +21,15 @@ hr {
   background-color: @lightGrey;
 }
 
+container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .content {
   width: 75%;
-  margin: 0 auto;
+  flex-direction: column;
   h4 {
     margin-top: 36px;
   }

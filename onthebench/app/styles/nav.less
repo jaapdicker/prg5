@@ -1,36 +1,33 @@
 /* NAVBAR */
 .navbar {
   border-radius: 0;
+  display: flex;
+
   a {
     color: #fff;
     &:hover {
       background-color: #fff;
       color: @primary;
-    }
-  }
-
-  .navbar-nav {
-    min-width: 150px;
-    margin-right: 0;
-    float: right;
-
-    .nav-item {
-      display: inline-flex;
-    }
-  }
-
-  .navbar-nav.navbar-right {
-    text-align: right;
-    margin-right: 15px;
-    line-height: 50px;
-
-    a {
       text-decoration: none;
     }
-
-    a.no-hover:hover {
+    &.no-hover:hover {
       background-color: transparent;
       color: inherit;
     }
+  }
+
+  h4 {
+    color: #fff;
+  }
+
+  .navbar-brand {
+    align-self: flex-start;
+  }
+  .navbar-nav {
+    margin-right: 15px;
+    margin-left: auto;
+    align-self: center;
+    display: inline;
+    flex-direction: row;
   }
 }

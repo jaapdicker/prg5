@@ -4,26 +4,44 @@
     <title>ONTHEBENCH</title>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./css/style.css"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
 
   </head>
   <body>
 
-    <nav class="navbar bg-primary fixed-top">
-      <a class="navbar-brand" href="/">ONTHEBENCH</a>
-
-      <h4 class="navbar-nav navbar-right">
-        <%= profile.fullName %>
-        <a href="/profile" class="fa fa-cogs no-hover"></a>
-      </h4>
-    </nav>
+    <%- include partials/nav.ejs %>
 
     <container>
-      <h1><%= team.name %></h1>
+      <header>
+          <div class="left header">
+            <h2><%- team.name %></h2>
+            <h3><%- team.matchday %> <%- team.class %></h3>
+          </div>
+          <div class="right header">
+            <a href="/event/new" class="fa fa-plus-square-o"></a>
+            <a href="/team/edit" class="fa fa-pencil"></a>
+          </div>
+      </header>
+      <content>
+        <% if(events.length > 0) { %>
+            <h4>Events:</h4>
+            <% events.forEach(function(event) { %>
+              <div class="listItem">
+                <div class="left">
+                  <div class="fa <%- event.type === 'match' ? fa-star-o : fa-retweet %>"</div>></div>
+                  <h3><%- event.name %></h3>
+                </div>
+                <div class="right">
+                  <a href="/team-new" class="fa fa-angle-right right-aligned"></a>
+                </div>
+              </div>
+            <% }) %>
+          <% } %>
+      </content>
     </container>
 
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </hmtl>

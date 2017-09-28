@@ -5,16 +5,13 @@ var Schema = mongoose.Schema,
     SALT_WORK_FACTOR = 10,
     ObjectId = Schema.ObjectId;
 
-
-// All schema's
-
 // team
 var teamSchema = new Schema({
   id: ObjectId,
   name: { type: String, required: true },
   matchday: {
     type: { type: String, required: true },
-    enum: ["saturday", "sunday"]
+    enum: ['saturday', 'sunday']
   },
   class: { type: String, required: true },
   _captain: { type: Schema.Types.ObjectId, ref: 'user' },
@@ -26,7 +23,7 @@ var team = mongoose.model('team', teamSchema);
 var divisionSchema = new Schema({
   id: ObjectId,
   name: { type: String, required: true },
-});
+}, { collection: 'Divisions' });
 var division = mongoose.model('division', divisionSchema)
 
 // binding model user - event
@@ -49,7 +46,7 @@ var eventSchema = new Schema({
   name: { type: String, required: true },
   date: { type: Date, required: true },
   location: String,
-  team: [{ type: Schema.Types.ObjectId, ref: 'team' }],
+  team: { type: Schema.Types.ObjectId, ref: 'team' },
 }, { collection: 'Events' });
 var event = mongoose.model('event', eventSchema);
 

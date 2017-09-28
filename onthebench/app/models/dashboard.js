@@ -39,7 +39,6 @@ var findClubs = function (model, searchQuery) {
 dashboard.search = function (models, searchQuery, callback) {
   var teams = [];
   var clubs = [];
-  console.log(searchQuery);
   var clubCursor = models.club.find(searchQuery).cursor();
   clubCursor.on('data', function(doc) {
     clubs.push(doc);
