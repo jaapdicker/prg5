@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<hmtl>
+  <head>
+    <title>ONTHEBENCH</title>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+
+  </head>
+  <body>
+
+    <%- include partials/nav.ejs %>
+
+    <container>
+      <form method="post" action="/event/new" class="form form-event">
+        <h2 class="form-heading form-event-heading">
+          New event
+        </h2>
+        <% if (message) { %>
+          <p class="error"><%= message.text %></p>
+        <% } %>
+
+        <div class="row">
+          <!-- type -->
+          <div class="col-xs-5 form-group">
+            <label for="inputType" class="sr-only">Event type</label>
+            <select class="form-control" id="inputType" name="type" required>
+              <option value="" selected disabled>Type</option>
+              <option value="training">Training</option>
+              <option value="match">Match</option>
+            </select>
+          </div>
+
+          <!-- name -->
+          <div class="col-xs-7 form-group">
+            <label for="inputName" class="sr-only">Name</label>
+            <input type="text" id="inputName" name="name" class="form-control" placeholder="Event name" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- location -->
+          <div class="col-xs-6 form-group">
+            <label for="inputLocation" class="sr-only">Location</label>
+            <input type="text" id="inputLocation" name="location" class="form-control" placeholder="Location" required >
+          </div>
+
+          <!-- date -->
+          <div class="col-xs-6 form-group">
+            <label for="inputDate" class="sr-only">Date</label>
+            <input type="date" id="inputDate" name="date" class="form-control" required>
+          </div>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create event</button>
+      </form>
+    </container>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/moment-with-locales.min.js"></script>
+    <script src="./js/bootstrap-datetimepicker.js"></script>
+    <script src="./js/plugins.js"></script>
+  </body>
+</hmtl>

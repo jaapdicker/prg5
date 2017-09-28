@@ -1,0 +1,15 @@
+<nav class="navbar bg-primary fixed-top">
+  <a class="navbar-brand" href="/">ONTHEBENCH</a>
+  <% if (menuitems.length == 0) { %>
+    <h4 class="navbar-nav">
+      <%- profile.firstName %>&nbsp;<%- profile.lastName %>
+      <a href="/profile" class="fa fa-cogs no-hover"></a>
+    </h4>
+  <% } else { %>
+    <ul class="nav navbar-nav">
+      <% for(var i = 0; i < menuitems.length; i++) { %>
+        <li class="nav-item"><a href="<%- menuitems[i] %>"><%- menuitems[i] %></a></li>
+      <% } %>
+    </ul>
+  <% } %>
+</nav>

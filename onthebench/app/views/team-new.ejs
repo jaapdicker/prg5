@@ -4,8 +4,8 @@
     <title>ONTHEBENCH</title>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./css/style.css"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
 
   </head>
   <body>
@@ -13,7 +13,7 @@
     <%- include partials/nav.ejs %>
 
     <container>
-      <form method="post" action="/team-new" class="form form-team">
+      <form method="post" class="form form-team">
         <h2 class="form-heading form-team-heading">
           New team
         </h2>
@@ -26,11 +26,9 @@
           <div class="col-xs-7 form-group">
             <label for="inputClub" class="sr-only">Club</label>
             <select class="form-control" id="inputClub" name="club" required>
-              <option value="" selected disabled>Club</option>
-              <% clubs.forEach(function(club) { %>
-                <option value="<%- club.name %>"><%- club.name %></option>
-              <% }) %>
+              <option value="<%- club.name %>" selected><%- club.name %></option>
             </select>
+
           </div>
 
           <!-- team number -->
@@ -67,7 +65,7 @@
       </form>
     </container>
 
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </hmtl>

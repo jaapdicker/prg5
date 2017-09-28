@@ -29,7 +29,7 @@ register.register = function(model, user, callback) {
         callback(null, new register());
       });
     }
-  })
+  });
 }
 
 module.exports = register;

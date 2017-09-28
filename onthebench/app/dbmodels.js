@@ -10,7 +10,8 @@ var teamSchema = new Schema({
   id: ObjectId,
   name: { type: String, required: true },
   matchday: {
-    type: { type: String, required: true },
+    type: String,
+    required: true,
     enum: ['saturday', 'sunday']
   },
   class: { type: String, required: true },

@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
   var session = req.cookies['session'];
 
   var showDashboard = function (err, data) {
-    res.cookie('divisions', { divisions: data.data.divisions });
+    res.cookie('divisions', data.data.divisions );
     res.render('dashboard', {
       profile: session.user,
       clubs: data.data.clubs,
@@ -27,7 +27,7 @@ router.post('/', function(req, res) {
     res.render('dashboard', {
       profile: req.cookies['session'].user,
       clubs: data.data.clubs,
-      divisions: req.cookies['divisions'].divisions,
+      divisions: req.cookies['divisions'],
       teams: data.data.teams,
       search: req.body ? req.body.search : "",
       menuitems: []

@@ -44,6 +44,7 @@ app.use(require('./controllers/logout'));
 app.use(require('./controllers/dashboard'));
 app.use(require('./controllers/profile'));
 app.use(require('./controllers/event'));
+app.use(require('./controllers/club'));
 
 app.use(require('./controllers/team'));
 
