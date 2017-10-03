@@ -6,7 +6,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../css/style.css"/>
-
+    <script src="../js/moment-with-locales.min.js"></script>
   </head>
   <body>
 
@@ -18,27 +18,39 @@
             <h2><%- team.name %></h2>
             <h3><%- team.matchday %> <%- team.class %></h3>
           </div>
-          <div class="right header">
-            <a href="/event/new" class="fa fa-plus-square-o"></a>
-            <a href="/team/edit" class="fa fa-pencil"></a>
-          </div>
+            <div class="right header">
+              <% if (team._captain.toString() === profile.id) { %>
+                <a href="/event/<%- team._id %>/new" class="fa fa-plus-square-o"></a>
+                <a href="/team/<%- team._id %>/edit" class="fa fa-pencil"></a>
+              <% } else { %>
+                <form method="post" action="/team/<%- team._id %>/<%- profile._teamId ? 'leave' : 'join' %>">
+                  <button type="submit" class="btn btn-primary"><%- profile._teamId ? 'Leave' : 'Join' %> team</button>
+                </form>
+              <% } %>
+            </div>
       </header>
-      <content>
+      <div class="content">
         <% if(events.length > 0) { %>
             <h4>Events:</h4>
             <% events.forEach(function(event) { %>
               <div class="listItem">
                 <div class="left">
-                  <div class="fa <%- event.type === 'match' ? fa-star-o : fa-retweet %>"</div>></div>
-                  <h3><%- event.name %></h3>
+                  <div class="fa <%- event.type === 'match' ? 'fa-star-o' : 'fa-retweet' %>"></div>
+                  <p><%- event.name %></p>
+                  <div class="fa fa-clock-o"></div>
+                  <p><%- moment(event.date).format('DD MMMM - h:mm'); %></p>
+                  <div class="fa fa-map-marker"></div>
+                  <p><%- event.location %></p>
                 </div>
-                <div class="right">
-                  <a href="/team-new" class="fa fa-angle-right right-aligned"></a>
-                </div>
+                <% if (profile._teamId) { %>
+                  <div class="right">
+                    <a href="/event/<%- event._id %>" class="fa fa-angle-right right-aligned"></a>
+                  </div>
+                <% } %>
               </div>
             <% }) %>
           <% } %>
-      </content>
+      </div>
     </container>
 
     <script src="../js/jquery.min.js"></script>

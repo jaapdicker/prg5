@@ -4,7 +4,7 @@ var dbmodels = require('../dbmodels');
 var model = require('../models/event');
 
 // get event page
-router.get('/event', function(req, res) {
+router.get('/event/:id/new', function(req, res) {
   var session = req.cookies['session'];
 
   res.render('event-new', {
@@ -14,6 +14,16 @@ router.get('/event', function(req, res) {
       text: ''
     }
   });
+});
+
+router.post('/event/:id/new', function(req, res) {
+  var teamId = req.params.id;
+
+  var creatingEvent = function(err) {
+    res.send('event created');
+  }
+
+  model.createEvent(dbmodels.event, teamId, req.body, creatingEvent);
 });
 
 router.get('/event/:id', function(req, res) {

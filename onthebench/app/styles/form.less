@@ -15,12 +15,14 @@
 }
 
 .form-inline.form-club-search {
-  width: 75%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 
   .form-control {
-    display: inline-block !important;
-    width: 59%;
+    width: 55%;
   }
 
   .select {
@@ -40,4 +42,10 @@
 
 .form-team, .form-event {
   width: 400px;
+}
+
+.form-event {
+  input, select {
+    margin: 0;
+  }
 }

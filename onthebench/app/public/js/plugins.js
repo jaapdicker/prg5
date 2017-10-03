@@ -1,8 +1,8 @@
 $(function () {
   // bootstrap date time picker
   $('#inputDate').datetimepicker({
-    format: 'lll',
-    extraFormats: [ 'DD.MM.YYYY:HH:MM'],
-    locale: 'nl'
+    format: 'DD/MM/YYYY h:mm',
+    locale: 'EN',
+    minDate: moment(),
   });
 });

@@ -1,5 +1,5 @@
+var moment = require('moment');
 var _ = require('underscore');
-var s = require('underscore.string');
 
 var team = function(data) {
   this.data = data;
@@ -20,14 +20,35 @@ team.set = function(prop, value) {
 
 // fetch team function
 team.fetchTeamData = function(models, id, callback) {
-  models.team.findById(id, function(err, team) {
-    if (err) return callback(err);
-    models.event.find({
-      _teamId: id
-    }, function(err, events) {
-      if (err) return callback(err);
-      callback(null, { team: team, events: events });
-    })
+  models.event.find().where({team: id}).exec(function(err, events) {
+    if (err) callback(err);
+    models.team.findById(id, function(err, team) {
+      if (err) callback(err);
+      callback(null, {events: events, team: team});
+    });
+  })
+}
+
+// join team
+team.joinTeam = function(model, ids, callback) {
+  model.findById(ids.userId, function(err, data) {
+    var updatedUser = _.extend(data, { _teamId: ids.teamId });
+    model.findByIdAndUpdate(ids.userId, updatedUser, function(err, user) {
+      if (err) callback(err);
+      callback(null, { user: user, team: ids.teamId });
+    });
+  });
+}
+
+// leave team
+team.leaveTeam = function(model, ids, callback) {
+  model.findById(ids.userId, function(err, data) {
+    var updatedUser = _.extend(data, { _teamId: null });
+
+    model.findByIdAndUpdate(ids.userId, updatedUser, function(err, user) {
+      if (err) callback(err);
+      callback(null, { user: user, team: ids.teamId });
+    });
   });
 }
 

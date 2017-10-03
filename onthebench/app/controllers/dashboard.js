@@ -19,7 +19,11 @@ router.get('/', function(req, res) {
     });
   }
 
-  model.fetchDashboard(dbmodels, {}, showDashboard);
+  if (session.user._teamId) {
+    res.redirect('/team/' + session.user._teamId);
+  } else {
+    model.fetchDashboard(dbmodels, {}, showDashboard);
+  }
 });
 
 router.post('/', function(req, res) {

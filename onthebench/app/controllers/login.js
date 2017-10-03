@@ -34,7 +34,8 @@ router.post('/login', function (req, res) {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      position: user.position
+      position: user.position,
+      _teamId: user._teamId
     };
     // set login cookie
     res.cookie('session', {
