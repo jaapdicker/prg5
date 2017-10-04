@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 // preload non auth controllers
 app.use(require('./controllers/login'));
+app.use(require('./controllers/logout'));
 app.use(require('./controllers/register'));
 
 // check if logged in
@@ -44,7 +45,6 @@ app.use(function(req, res, next) {
 });
 
 // load all other controllers
-app.use(require('./controllers/logout'));
 app.use(require('./controllers/dashboard'));
 app.use(require('./controllers/profile'));
 app.use(require('./controllers/event'));

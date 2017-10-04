@@ -23,8 +23,7 @@ baseModel.data = {
   message: {
     text: null
   },
-  moment: moment,
-  _: _
+  moment: moment
 }
 
 // get function
