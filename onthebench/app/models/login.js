@@ -14,7 +14,9 @@ login.login = function(model, credentials, callback) {
       if (err) return callback(err);
       if (!isMatch) baseModel.message = { text: 'Either email or password is invalid' };
       baseModel.set('userId', profile._id);
-      baseModel.set('profile', profile);
+
+      // strip password from profile object
+      baseModel.set('profile', _.omit(profile.toObject(), 'password'));
       callback(null);
     })
   });
