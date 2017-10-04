@@ -15,7 +15,7 @@ var teamSchema = new Schema({
     enum: ['saturday', 'sunday']
   },
   class: { type: String, required: true },
-  _captain: { type: Schema.Types.ObjectId, ref: 'user' },
+  _captainId: { type: Schema.Types.ObjectId, ref: 'user' },
   _clubId: { type: Schema.Types.ObjectId, ref: 'club' }
 }, { collection: 'Teams' });
 var team = mongoose.model('team', teamSchema);
@@ -30,8 +30,8 @@ var division = mongoose.model('division', divisionSchema)
 // binding model user - event
 var user_eventSchema = new Schema({
   id: ObjectId,
-  person: [{ type: Schema.Types.ObjectId, ref: 'user' }],
-  event: [{ type: Schema.Types.ObjectId, ref: 'event' }],
+  _personId: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  _eventId: { type: Schema.Types.ObjectId, ref: 'event' },
   presence: {
     type: String,
     enum: ["accepted", "pending", "declined", "empty"],
@@ -47,7 +47,7 @@ var eventSchema = new Schema({
   name: { type: String, required: true },
   date: { type: Date, required: true },
   location: String,
-  team: { type: Schema.Types.ObjectId, ref: 'team' },
+  _teamId: { type: Schema.Types.ObjectId, ref: 'team' },
 }, { collection: 'Events' });
 var event = mongoose.model('event', eventSchema);
 
@@ -63,8 +63,8 @@ var club = mongoose.model('club', clubSchema);
 
 var club_teamSchema = new Schema({
   id: ObjectId,
-  clubId: [{ type: Schema.Types.ObjectId, ref: 'club' }],
-  teamId: [{ type: Schema.Types.ObjectId, ref: 'team' }]
+  _clubId: [{ type: Schema.Types.ObjectId, ref: 'club' }],
+  _teamId: [{ type: Schema.Types.ObjectId, ref: 'team' }]
 });
 var club_team = mongoose.model('event', eventSchema);
 

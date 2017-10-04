@@ -4,8 +4,8 @@
     <title>ONTHEBENCH</title>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./css/style.css"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
 
   </head>
   <body>
@@ -13,10 +13,52 @@
     <%- include partials/nav.ejs %>
 
     <container>
-      <h1>Excisting Event</h1>
+      <header>
+        <div class="left header">
+          <h2><%- team.name %></h2>
+          <h3><%- event.name %> - <%- moment(event.date).format('DD MMMM - h:mm'); %></h3>
+        </div>
+          <div class="right header">
+            <% if (team._captainId.toString() === profile._id.toString()) { %>
+              <a href="/event/<%- team._id %>/delete" class="fa fa-trash-o"></a>
+              <a href="/team/<%- team._id %>/edit" class="fa fa-pencil"></a>
+            <% } %>
+          </div>
+      </header>
+      <div class="content">
+        <% if(players.length > 0) { %>
+          <h4>Players:</h4>
+          <% players.forEach(function(player) { %>
+            <div class="listItem">
+              <div class="left">
+                <div class="fa fa-user-circle-o"></div>
+                <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === profile._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
+              </div>
+              <div class="right">
+                <form class="form-presence" method="post">
+                  <div class="radio accepted">
+                    <input type="radio" name="presence" value="accepted" class="accepted" onchange="submitForm()">
+                    <div class="check fa fa-check-circle-o"></div>
+                  </div>
+                  <div class="radio pending">
+                    <input type="radio" name="presence" value="pending" class="pending" onchange="submitForm()">
+                    <div class="check fa fa-question-circle-o"></div>
+                  </div>
+                  <div class="radio declined">
+                    <input type="radio" name="presence" value="declined" class="declined" onchange="submitForm()">
+                    <div class="check fa fa-times-circle-o"></div>
+                  </div>
+                  <input type="hidden" name="playerId" value="<%- player._id %>">
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
     </container>
 
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/presence.js"></script>
   </body>
 </hmtl>

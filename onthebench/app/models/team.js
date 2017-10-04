@@ -1,4 +1,3 @@
-var moment = require('moment');
 var _ = require('underscore');
 var baseModel = require('./baseModel');
 
@@ -6,7 +5,7 @@ var team = _.extend(baseModel);
 
 // fetch team function
 team.fetchTeamData = function(models, id, callback) {
-  models.event.find().where({team: id}).exec(function(err, events) {
+  models.event.find().where({_teamId: id}).exec(function(err, events) {
     if (err) callback(err);
     models.team.findById(id, function(err, team) {
       if (err) callback(err);

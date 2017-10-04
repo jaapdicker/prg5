@@ -49,3 +49,46 @@
     margin: 0;
   }
 }
+
+.form-presence {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  .radio {
+    margin: 0 25px;
+    input[type=radio] {
+      position: relative;
+      opacity: 0;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+    }
+    .check {
+      pointer-events: none;
+      position: absolute;
+      font-size: 36px;
+      color: #999;
+      top: 4px;
+      left: -17px;
+    }
+
+    &.accepted {
+      input[type=radio]:checked ~ .check {
+        color: #219351;
+      }
+    }
+
+    &.pending {
+      input[type=radio]:checked ~ .check {
+        color: #CE842E;
+      }
+    }
+
+    &.declined {
+      input[type=radio]:checked ~ .check {
+        color: #A73416;
+      }
+    }
+  }
+}

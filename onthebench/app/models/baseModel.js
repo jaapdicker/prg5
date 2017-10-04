@@ -15,6 +15,8 @@ baseModel.data = {
   teams: [],
   team: [],
   events: [],
+  event: {},
+  players: [],
   search: null,
   menuitems: [
     'register',
@@ -39,7 +41,7 @@ baseModel.set = function (prop, value) {
 baseModel.fetchProfile = function(id) {
   dbmodels.user.findById(id, function(err, user) {
     baseModel.set('userId', user._id);
-    baseModel.set('profile', user);
+    baseModel.set('profile', _.omit(user.toObject(), 'password'));
   });
 }
 

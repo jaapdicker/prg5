@@ -14,42 +14,42 @@
 
     <container>
       <header>
-          <div class="left header">
-            <h2><%- team.name %></h2>
-            <h3><%- team.matchday %> <%- team.class %></h3>
+        <div class="left header">
+          <h2><%- team.name %></h2>
+          <h3><%- team.matchday %> <%- team.class %></h3>
+        </div>
+          <div class="right header">
+            <% if (team._captainId.toString() === profile._id.toString()) { %>
+              <a href="/event/<%- team._id %>/new" class="fa fa-plus-square-o"></a>
+              <a href="/team/<%- team._id %>/edit" class="fa fa-pencil"></a>
+            <% } else { %>
+              <form method="post" action="/team/<%- team._id %>/<%- profile._teamId ? 'leave' : 'join' %>">
+                <button type="submit" class="btn btn-primary"><%- profile._teamId ? 'Leave' : 'Join' %> team</button>
+              </form>
+            <% } %>
           </div>
-            <div class="right header">
-              <% if (team._captain.toString() === profile._id.toString()) { %>
-                <a href="/event/<%- team._id %>/new" class="fa fa-plus-square-o"></a>
-                <a href="/team/<%- team._id %>/edit" class="fa fa-pencil"></a>
-              <% } else { %>
-                <form method="post" action="/team/<%- team._id %>/<%- profile._teamId ? 'leave' : 'join' %>">
-                  <button type="submit" class="btn btn-primary"><%- profile._teamId ? 'Leave' : 'Join' %> team</button>
-                </form>
-              <% } %>
-            </div>
       </header>
       <div class="content">
         <% if(events.length > 0) { %>
-            <h4>Events:</h4>
-            <% events.forEach(function(event) { %>
-              <div class="listItem">
-                <div class="left">
-                  <div class="fa <%- event.type === 'match' ? 'fa-star-o' : 'fa-retweet' %>"></div>
-                  <p><%- event.name %></p>
-                  <div class="fa fa-clock-o"></div>
-                  <p><%- moment(event.date).format('DD MMMM - h:mm'); %></p>
-                  <div class="fa fa-map-marker"></div>
-                  <p><%- event.location %></p>
-                </div>
-                <% if (profile._teamId) { %>
-                  <div class="right">
-                    <a href="/event/<%- event._id %>" class="fa fa-angle-right right-aligned"></a>
-                  </div>
-                <% } %>
+          <h4>Events:</h4>
+          <% events.forEach(function(event) { %>
+            <div class="listItem">
+              <div class="left">
+                <div class="fa <%- event.type === 'match' ? 'fa-star-o' : 'fa-retweet' %>"></div>
+                <p><%- event.name %></p>
+                <div class="fa fa-clock-o"></div>
+                <p><%- moment(event.date).format('DD MMMM - h:mm'); %></p>
+                <div class="fa fa-map-marker"></div>
+                <p><%- event.location %></p>
               </div>
-            <% }) %>
-          <% } %>
+              <% if (profile._teamId) { %>
+                <div class="right">
+                  <a href="/event/<%- event._id %>" class="fa fa-angle-right right-aligned"></a>
+                </div>
+              <% } %>
+            </div>
+          <% }) %>
+        <% } %>
       </div>
     </container>
 

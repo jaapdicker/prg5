@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var moment = require('moment');
 var dbmodels = require('../dbmodels');
 var model = require('../models/team');
 

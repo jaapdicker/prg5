@@ -21,7 +21,7 @@ club.createTeam = function (model, data, ids, callback) {
     matchday: data.matchday,
     class: data.class,
     _clubId: ids.clubId,
-    _captain: ids.userId
+    _captainId: ids.userId
   }
 
   // check if team does not already excist

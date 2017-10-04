@@ -1,27 +1,20 @@
+var _ = require('underscore');
 var moment = require('moment');
+var baseModel = require('./baseModel');
 
-var event = function(data) {
-  this.data = data;
-}
-
-// create data object
-event.data = {}
-
-// get function
-event.get = function (prop) {
-  return this.data[prop];
-}
-
-// set function
-event.set = function(prop, value) {
-  this.data[prop] = value;
-}
+var event = _.extend(baseModel);
 
 // fetch event function
-event.fetchEvent = function(model, id, callback) {
-  model.findById(id, function(err, event) {
+event.fetchEvent = function (models, id, callback) {
+  models.event.findById(id, function (err, event) {
     if (err || !event) return callback(err);
-    callback(null, { event: event });
+    models.user.find({}, '-password')
+    .where({ _teamId: event._teamId })
+    .exec(function (err, players) {
+      baseModel.set('players', players);
+    });
+    baseModel.set('event', event);
+    callback(null);
   });
 }
 
@@ -35,14 +28,44 @@ event.createEvent = function(model, teamId, event, callback) {
     name: event.name,
     date: formattedDate,
     location: event.location,
-    team: teamId,
+    _teamId: teamId,
   };
 
   // create new event
   var newEvent = new model(eventData);
-  newEvent.save(function(err, data) {
+  newEvent.save(function( err, data) {
     if (err) return callback(err);
-    callback(null, data);
+    baseModel.set('event', event);
+    callback(null);
+  });
+}
+
+
+// check update
+event.updatePresence = function (model, eventId, presenceData, callback) {
+  var userEventData = {
+    _personId: presenceData.playerId,
+    _eventId: eventId,
+    precence: presenceData.presence,
+  };
+  model.find({
+    _personId: presenceData.playerId
+  }, function(err, data) {
+    if (err) return callback(err);
+    console.log(data);
+    if (data.length === 0) {
+      var newUserEvent = new model(userEventData);
+      newUserEvent.save(function(err, data) {
+        if (err) return callback(err);
+        callback(null, data);
+      });
+    } else {
+      model.findByIdAndUpdate({ _personId: presenceData.playerId }, userEventData, function(err, data) {
+        console.log(data);
+        if (err) return callback(err);
+        callback(null, data);
+      });
+    }
   });
 }
 
