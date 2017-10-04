@@ -5,30 +5,37 @@ var model = require('../models/login');
 
 // get login
 router.get('/login', function (req, res) {
-  if(model.data.userId) {
-    res.redirect('/');
-  }
-  res.render('login', model.data);
+  res.render('login', {
+    menuitems: ["register", "login"],
+    error: {}
+  });
 });
 
 // post login
 router.post('/login', function (req, res) {
 
-  var logginIn = function (err) {
+  var logginIn = function (err, data) {
+    var user = data ? data.data.profile : false;
+
     // show error message
-    if (model.data.message.text) {
-      res.render('login', model.data);
+    if (!user) {
+      res.render('login', {
+        menuitems: ["register", "login"],
+        error: {
+          message: "Either email or password is invalid"
+        }
+      });
       return false;
     }
 
     // create readable profile
     var cookieUser = {
-      id: model.data.profile._id,
-      firstName: model.data.profile.firstName,
-      lastName: model.data.profile.lastName,
-      email: model.data.profile.email,
-      position: model.data.profile.position,
-      _teamId: model.data.profile._teamId
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      position: user.position,
+      _teamId: user._teamId
     };
     // set login cookie
     res.cookie('session', {

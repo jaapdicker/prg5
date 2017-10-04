@@ -1,7 +1,21 @@
-var _ = require('underscore');
-var baseModel = require('./baseModel');
+var _ = require('lodash');
 
-var profile = _.extend(baseModel);
+var profile = function (data) {
+  this.data = data;
+}
+
+// create data object
+profile.data = {}
+
+// get function
+profile.get = function (prop) {
+  return this.data[prop];
+}
+
+// set function
+profile.set = function(prop, value) {
+  this.data[prop] = value;
+}
 
 // update function
 profile.update = function(model, id, data, callback) {
@@ -13,10 +27,9 @@ profile.update = function(model, id, data, callback) {
     // merge update old profile
     var updatedUser = _.extend(user, data);
     // save new profile with hashed password
-    updatedUser.save(function(err, profile) {
+    updatedUser.save(function(err, doc) {
       if (err) return callback(err);
-      baseModel.set('profile', profile)
-      callback(null);
+      callback(null, new profile({ profile: doc }));
     });
   });
 

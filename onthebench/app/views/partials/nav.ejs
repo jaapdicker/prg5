@@ -1,6 +1,6 @@
 <nav class="navbar bg-primary fixed-top">
   <a class="navbar-brand" href="/">ONTHEBENCH</a>
-  <% if (menuitems.length == 0) { %>
+  <% if (userId) { %>
     <h4 class="navbar-nav">
       <%- profile.firstName %>&nbsp;<%- profile.lastName %>
       <a href="/profile" class="fa fa-cogs no-hover"></a>

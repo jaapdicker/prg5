@@ -1,55 +1,36 @@
-var dashboard = function (data) {
-  this.data = data;
-}
+var _ = require('underscore');
+var baseModel = require('./baseModel');
 
-// create data object
-dashboard.data = {};
-
-// get function
-dashboard.get = function (prop) {
-  return this.data[prop];
-}
-
-// set function
-dashboard.set = function (prop, value) {
-  this.data[prop] = value;
-}
+var dashboard = _.extend(baseModel);
 
 // fetch dashboard data
 dashboard.fetchDashboard = function (models, searchQuery, callback) {
-  models.club.find(searchQuery, function(err, clubs) {
+  models.club.find(searchQuery, function (err, clubs) {
     if (err) return callback(err);
-    models.division.find(searchQuery, function(err, divisions) {
+    models.division.find(searchQuery, function (err, divisions) {
       if (err) return callback(err);
-      callback(null, new dashboard({
-        clubs: clubs,
-        divisions: divisions
-      }));
+      baseModel.set('clubs', clubs);
+      baseModel.set('divisions', divisions);
+      callback(null);
     })
   });
 }
-
-var findClubs = function (model, searchQuery) {
-  var clubs = "";
-}
-
-// filter clubs or teams
 
 // find clubs and teams
 dashboard.search = function (models, searchQuery, callback) {
   var teams = [];
   var clubs = [];
   var clubCursor = models.club.find(searchQuery).cursor();
-  clubCursor.on('data', function(doc) {
+  clubCursor.on('data', function (doc) {
     clubs.push(doc);
     var teamCursor = models.team.find({ _clubId: doc._id }).cursor();
-    teamCursor.on('data', function(doc) {
+    teamCursor.on('data', function (doc) {
       teams.push(doc);
-    }).on('close', function() {
-      callback(null, new dashboard({
-        clubs: clubs,
-        teams: teams
-      }));
+    }).on('close', function () {
+      baseModel.set('clubs', clubs);
+      baseModel.set('teams', teams);
+      baseModel.set('search', searchQuery.name.$regex);
+      callback(null);
     });
   });
 };

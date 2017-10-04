@@ -31,12 +31,12 @@
         <!-- position -->
         <label for="inputPosition" class="sr-only">Position</label>
         <select class="form-control" id="inputPosition" name="position" required>
-          <option value="" selected="<%- !profile.position ? true : false %>" disabled>Position</option>
-          <option value="bench" selected="<%- profile.position === 'bench' ? true : false %>">Bench heater</option>
-          <option value="striker" selected="<%- profile.position === 'striker' ? true : false %>">Striker</option>
-          <option value="midfielder" selected="<%- profile.position === 'midfielder' ? true : false %>">Midfielder</option>
-          <option value="defender" selected="<%- profile.position === 'defender' ? true : false %>">Defender</option>
-          <option value="keeper" selected="<%- profile.position === 'keeper' ? true : false %>">Keeper</option>
+          <option value="" <%- !profile.position ? 'selected' : '' %> disabled>Position</option>
+          <option value="bench" <%- profile.position === "bench" ? 'selected' : '' %>>Bench heater</option>
+          <option value="striker" <%- profile.position === "striker" ? 'selected' : '' %>>Striker</option>
+          <option value="midfielder" <%- profile.position === "midfielder" ? 'selected' : '' %>>Midfielder</option>
+          <option value="keeper" <%- profile.position === "keeper" ? 'selected' : '' %>>Keeper</option>
+          <option value="defender" <%- profile.position === "defender" ? 'selected' : '' %>>Defender</option>
         </select>
 
         <!-- email -->

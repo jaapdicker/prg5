@@ -1,8 +1,22 @@
 var moment = require('moment');
 var _ = require('underscore');
-var baseModel = require('./baseModel');
 
-var team = _.extend(baseModel);
+var team = function(data) {
+  this.data = data;
+}
+
+// create data object
+team.data = {}
+
+// get function
+team.get = function (prop) {
+  return this.data[prop];
+}
+
+// set function
+team.set = function(prop, value) {
+  this.data[prop] = value;
+}
 
 // fetch team function
 team.fetchTeamData = function(models, id, callback) {
@@ -10,9 +24,7 @@ team.fetchTeamData = function(models, id, callback) {
     if (err) callback(err);
     models.team.findById(id, function(err, team) {
       if (err) callback(err);
-      baseModel.set('events', events);
-      baseModel.set('team', team);
-      callback(null);
+      callback(null, {events: events, team: team});
     });
   })
 }
@@ -23,8 +35,7 @@ team.joinTeam = function(model, ids, callback) {
     var updatedUser = _.extend(data, { _teamId: ids.teamId });
     model.findByIdAndUpdate(ids.userId, updatedUser, function(err, user) {
       if (err) callback(err);
-      baseModel.set('profile', user);
-      callback(null);
+      callback(null, { user: user, team: ids.teamId });
     });
   });
 }
@@ -33,10 +44,10 @@ team.joinTeam = function(model, ids, callback) {
 team.leaveTeam = function(model, ids, callback) {
   model.findById(ids.userId, function(err, data) {
     var updatedUser = _.extend(data, { _teamId: null });
+
     model.findByIdAndUpdate(ids.userId, updatedUser, function(err, user) {
       if (err) callback(err);
-      baseModel.set('profile', user);
-      callback(null);
+      callback(null, { user: user, team: ids.teamId });
     });
   });
 }

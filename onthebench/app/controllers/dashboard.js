@@ -5,22 +5,11 @@ var model = require('../models/dashboard');
 
 // get index
 router.get('/', function(req, res) {
-  var session = req.cookies['session'];
-
   var showDashboard = function (err, data) {
-    res.cookie('divisions', data.data.divisions );
-    res.render('dashboard', {
-      profile: session.user,
-      clubs: data.data.clubs,
-      divisions: data.data.divisions,
-      teams: [],
-      search: "",
-      menuitems: []
-    });
+    res.render('dashboard', model.data);
   }
-
-  if (session.user._teamId) {
-    res.redirect('/team/' + session.user._teamId);
+  if (model.data.profile._teamId) {
+    res.redirect('/team/' + model.data.profile._teamId);
   } else {
     model.fetchDashboard(dbmodels, {}, showDashboard);
   }
@@ -28,14 +17,7 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
   var showSearchResults = function(err, data) {
-    res.render('dashboard', {
-      profile: req.cookies['session'].user,
-      clubs: data.data.clubs,
-      divisions: req.cookies['divisions'],
-      teams: data.data.teams,
-      search: req.body ? req.body.search : "",
-      menuitems: []
-    });
+    res.render('dashboard', model.data);
   }
 
   model.search(dbmodels, {

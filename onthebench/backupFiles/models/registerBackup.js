@@ -1,7 +1,19 @@
-var _ = require('underscore');
-var baseModel = require('./baseModel');
+var register = function (data) {
+  this.data = data;
+}
 
-var register = _.extend(baseModel);
+// create data object
+register.data = {}
+
+// get function
+register.get = function (prop) {
+  return this.data[prop];
+}
+
+// set function
+register.set = function(prop, value) {
+  this.data[prop] = value;
+}
 
 // register function
 register.register = function(model, user, callback) {
@@ -14,7 +26,7 @@ register.register = function(model, user, callback) {
       var newUser = new model(userData);
       newUser.save(function(err) {
         if (err) return callback(err);
-        callback(null);
+        callback(null, new register());
       });
     }
   });

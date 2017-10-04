@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
+var baseModel = require('./models/baseModel');
 // var expressValidator = require('express-validator');
 
 // create app
@@ -32,8 +33,11 @@ app.use(require('./controllers/register'));
 
 // check if logged in
 app.use(function(req, res, next) {
-  if (!req.cookies['session']) {
+  if (!baseModel.data.userId && !req.cookies['session']) {
     res.redirect('/login');
+  } else if (req.cookies['session']) {
+    baseModel.fetchProfile(req.cookies['session'].user.id);
+    next();
   } else {
     next();
   }
@@ -45,12 +49,9 @@ app.use(require('./controllers/dashboard'));
 app.use(require('./controllers/profile'));
 app.use(require('./controllers/event'));
 app.use(require('./controllers/club'));
-
 app.use(require('./controllers/team'));
-
 app.use(require('./controllers/clubCreate'));
 app.use(require('./controllers/divisionCreate'));
-
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {

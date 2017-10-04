@@ -5,13 +5,7 @@ var model = require('../models/profile');
 
 // get profile page
 router.get('/profile', function (req, res) {
-  var session = req.cookies['session'];
-
-  res.render('profile', {
-    profile: session.user,
-    menuitems: [],
-    message: {},
-  });
+  res.render('profile', model.data);
 });
 
 // post profile update
@@ -21,36 +15,10 @@ router.post('/profile', function (req, res) {
   // find only user and update (findOneAndUpdate not possible with password hashing)
   var updating = function (err, data) {
     if(err) {
-      res.render('profile', {
-        profile: req.cookies['session'].user,
-        menuitems: [],
-        message: {
-          text: err
-        }
-      });
+      res.render('profile', model.data);
       return false;
     }
-
-    // update session cookie
-    var user = data.data.profile;
-    var cookieUser = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      position: user.position
-    };
-    res.cookie('session', {
-      user: cookieUser,
-      loggedIn: true,
-    });
-    res.render('profile', {
-      profile: user,
-      menuitems: [],
-      message: {
-        text: "Profile updated"
-      }
-    });
+    res.render('profile', model.data);
   }
 
   model.update(dbmodels.user, userId, req.body, updating);

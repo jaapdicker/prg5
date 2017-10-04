@@ -4,20 +4,33 @@ var dbmodels = require('../dbmodels');
 var model = require('../models/club');
 
 router.get('/club/:id', function(req, res) {
+  var session = req.cookies['session'];
+  var divisions = req.cookies['divisions'];
+
   var showNewTeamForm = function(err, data) {
-    res.render('team-new', model.data);
+    res.render('team-new', {
+      profile: session.user,
+      divisions: divisions,
+      club: data.club,
+      message: {},
+      menuitems: []
+    });
   }
+
   model.fetchClub(dbmodels.club, req.params.id, showNewTeamForm);
+
 });
 
 router.post('/club/:id', function(req, res) {
+  var session = req.cookies['session'];
+  var divisions = req.cookies['divisions'].divisions;
   var ids = {
     clubId: req.params.id,
-    userId: model.data.userId
+    userId: session.user.id
   };
 
   var creatingTeam = function(err, data) {
-    res.redirect('/team/' + model.data.team._id);
+    res.redirect('/team/' + data._id);
   }
 
   model.createTeam(dbmodels.team, req.body, ids, creatingTeam);

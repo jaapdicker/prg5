@@ -5,10 +5,12 @@ var model = require('../models/register');
 
 // get register
 router.get('/register', function (req, res) {
-  if(model.data.userId) {
-    res.redirect('/');
-  }
-  res.render('register', model.data);
+  var session = req.cookies['session'];
+
+  res.render('register', {
+    menuitems: ["register", "login"],
+    error: {}
+  });
 });
 
 // post register
@@ -16,7 +18,19 @@ router.post('/register', function (req, res) {
 
   // callback function
   var registering = function (err, data) {
-    res.render('login', model.data);
+    if (!data) {
+      res.render('register', {
+        menuitems: ["register", "login"],
+        error: {
+          message: "Email is already in use"
+        }
+      });
+      return false;
+    }
+    res.render('login', {
+      menuitems: ["register", "login"],
+      error: {}
+    });
   }
 
   // do register

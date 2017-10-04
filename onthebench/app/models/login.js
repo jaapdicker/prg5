@@ -1,19 +1,7 @@
-var login = function (data) {
-  this.data = data;
-}
+var _ = require('underscore');
+var baseModel = require('./baseModel');
 
-//  create data object
-login.data = {};
-
-// get function
-login.get = function (prop) {
-  return this.data[prop];
-}
-
-// set function
-login.set = function(prop, value) {
-  this.data[prop] = value;
-}
+var login = _.extend(baseModel);
 
 // login function
 login.login = function(model, credentials, callback) {
@@ -23,8 +11,11 @@ login.login = function(model, credentials, callback) {
   }, function(err, profile) {
     if (err) return callback(err);
     profile.verifyPassword(credentials.password, function(err, isMatch) {
-      if (err || !isMatch) return callback(err);
-      callback(null, new login({ profile: profile }));
+      if (err) return callback(err);
+      if (!isMatch) baseModel.message = { text: 'Either email or password is invalid' };
+      baseModel.set('userId', profile._id);
+      baseModel.set('profile', profile);
+      callback(null);
     })
   });
 

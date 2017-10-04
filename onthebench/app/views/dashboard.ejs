@@ -27,8 +27,8 @@
           <button type="submit" class="btn btn-inverted btn-primary"><div class="fa fa-search"></div></button>
         </form>
         <div class="content">
-          <% if(search !== "") { %>
-            <p>Searched for: <%- search %></p>
+          <% if(search !== null) { %>
+            <p>Last searched for: <%- search %></p>
           <% } %>
           <% if(clubs.length > 0) { %>
             <h4>Clubs:</h4>
