@@ -16,10 +16,11 @@ router.post('/login', function (req, res) {
 
   var logginIn = function (err) {
     // show error message
-    if (model.data.message.text) {
+    if (err) {
       res.render('login', model.data);
       return false;
     }
+    model.set('message', {});
 
     // create readable profile
     var cookieUser = {
