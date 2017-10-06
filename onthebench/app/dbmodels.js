@@ -9,6 +9,7 @@ var Schema = mongoose.Schema,
 var teamSchema = new Schema({
   id: ObjectId,
   name: { type: String, required: true },
+  teamnr: { type: String, required: true },
   matchday: {
     type: String,
     required: true,

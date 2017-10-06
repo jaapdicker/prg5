@@ -184,6 +184,18 @@ a.club-add {
 .listItem .right a:hover {
   text-decoration: none;
 }
+.listItem .right button[type=submit].btn-basic {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+.listItem .right button[type=submit].btn-basic:hover {
+  color: #A73416;
+}
+.listItem .right button[type=submit].btn-basic:focus {
+  outline: none;
+}
 .listItem .fa {
   font-size: 24px;
 }

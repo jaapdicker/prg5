@@ -33,6 +33,19 @@
         text-decoration: none;
       }
     }
+
+    button[type=submit].btn-basic {
+      background: none;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      &:hover {
+        color: @red;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
   }
 
   .fa {

@@ -14,11 +14,11 @@ club.fetchClub = function (model, id, callback) {
 
 // save new team
 club.createTeam = function (model, data, ids, callback) {
-
   // team data
   var teamData = {
     name: data.club + ' ' + data.teamnr,
-    matchday: data.matchday,
+    teamnr: data.teamnr,
+    matchday: data.matchday.toLowerCase(),
     class: data.class,
     _clubId: ids.clubId,
     _captainId: ids.userId

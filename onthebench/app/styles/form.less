@@ -9,7 +9,7 @@
 
   button:hover {
     color: @primary;
-    background-color: #fff;
+    background-color: @backgroundColor;
     border-color: @primary;
   }
 }
@@ -35,7 +35,7 @@
   }
 
   button:hover {
-    color: #fff;
+    color: @white;
     background-color: @primary;
   }
 }
@@ -75,19 +75,19 @@
 
     &.accepted {
       input[type=radio]:checked ~ .check {
-        color: #219351;
+        color: @green;
       }
     }
 
     &.pending {
       input[type=radio]:checked ~ .check {
-        color: #CE842E;
+        color: @orange;
       }
     }
 
     &.declined {
       input[type=radio]:checked ~ .check {
-        color: #A73416;
+        color: @red;
       }
     }
   }

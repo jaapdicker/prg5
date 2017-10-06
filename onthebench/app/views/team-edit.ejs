@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<hmtl>
+  <head>
+    <title>ONTHEBENCH</title>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+
+  </head>
+  <body>
+
+    <%- include partials/nav.ejs %>
+
+    <container>
+      <form method="post" class="form form-team" action="/team/<%- team._id %>">
+        <h2 class="form-heading form-team-heading">
+          Edit team
+        </h2>
+        <% if (message) { %>
+          <p class="error"><%= message.text %></p>
+        <% } %>
+
+        <div class="row">
+          <!-- team number -->
+          <div class="col-xs-3 form-group">
+            <label for="inputTeamnr" class="sr-only">Team number</label>
+            <input type="text" id="inputTeamnr" name="teamnr" class="form-control" placeholder="Teamnr" value="<%- team.teamnr %>" required />
+          </div>
+          <!-- match day -->
+          <div class="col-xs-4 form-group">
+            <label for="inputMatchday" class="sr-only">Match day</label>
+            <select id="inputMatchday" name="matchday" class="form-control" required >
+              <option value="" selected disabled>Match day</option>
+              <option value="saturday" <%- team.matchday === 'saturday' ? 'selected' : '' %>>Saturday</option>
+              <option value="sunday" <%- team.matchday === 'sunday' ? 'selected' : '' %>>Sunday</option>
+            </select>
+          </div>
+          <!-- class -->
+          <div class="col-xs-5 form-group">
+            <label for="inputClass" class="sr-only">Class</label>
+            <select id="inputClass" name="class" class="form-control" required>
+              <option value="" selected disabled>Class</option>
+              <% divisions.forEach(function(division) { %>
+                <option value="<%- division.name %>" <%- division.name === team.class ? 'selected' : '' %>><%- division.name %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+
+        <!-- submit -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Update team</button>
+      </form>
+      <div class="content">
+        <hr />
+        <% if(players.length > 0) { %>
+          <h4>Players:</h4>
+          <% players.forEach(function(player) { %>
+            <div class="listItem">
+              <div class="left">
+                <div class="fa fa-user-circle-o"></div>
+                <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === player._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
+              </div>
+              <div class="right">
+                <form class="form-player" method="post" action="/team/<%- team._id %>">
+                  <button type="submit" class="fa fa-trash btn btn-basic" />
+                  <input type="hidden" name="playerId" value="<%- player._id %>">
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+
+    </container>
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+  </body>
+</hmtl>

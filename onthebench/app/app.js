@@ -36,8 +36,8 @@ app.use(require('./controllers/register'));
 app.use(function(req, res, next) {
   if (!baseModel.data.userId && !req.cookies['session']) {
     res.redirect('/login');
-  } else if (req.cookies['session']) {
-    baseModel.fetchProfile(req.cookies['session'].user.id);
+  } else if (req.cookies['session'] && req.cookies['session'].loggedIn && !baseModel.data.userId) {
+    baseModel.fetchData(req.cookies['session'].user.id);
     next();
   } else {
     next();

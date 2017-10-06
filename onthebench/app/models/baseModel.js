@@ -7,17 +7,11 @@ var baseModel = function(data) {
 }
 
 baseModel.data = {
-  userId: null,
-  profile: {},
-  divisions: [],
   clubs: [],
   club: [],
-  teams: [],
-  team: [],
+  divisions: [],
   events: [],
   event: {},
-  players: [],
-  search: null,
   menuitems: [
     'register',
     'login'
@@ -25,7 +19,13 @@ baseModel.data = {
   message: {
     text: null
   },
-  moment: moment
+  moment: moment,
+  players: [],
+  profile: {},
+  search: null,
+  userId: null,
+  teams: [],
+  team: []
 }
 
 // get function
@@ -38,11 +38,34 @@ baseModel.set = function (prop, value) {
   this.data[prop] = value;
 }
 
-baseModel.fetchProfile = function(id) {
+var fetchClubs = function() {
+  dbmodels.club.find({}, function(err, clubs) {
+    baseModel.set('clubs', clubs);
+  })
+}
+
+var fetchDivisions = function() {
+  dbmodels.division.find({}, function(err, divisions) {
+    baseModel.set('divisions', divisions);
+  });
+}
+
+var fetchProfile = function(id) {
   dbmodels.user.findById(id, function(err, user) {
     baseModel.set('userId', user._id);
     baseModel.set('profile', _.omit(user.toObject(), 'password'));
+    dbmodels.team.findById(user._teamId, function(err, team) {
+      dbmodels.club.findById(team._clubId, function(err, club) {
+        baseModel.set('club', club);
+      });
+    });
   });
+}
+
+baseModel.fetchData = function(id) {
+  fetchProfile(id);
+  fetchDivisions();
+  fetchClubs();
 }
 
 module.exports = baseModel;
