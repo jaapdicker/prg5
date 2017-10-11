@@ -28,31 +28,30 @@
       <div class="content">
         <% if(players.length > 0) { %>
           <h4>Players:</h4>
-          <% players.forEach(function(player) { %>
-            <div class="listItem">
-              <div class="left">
-                <div class="fa fa-user-circle-o"></div>
-                <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === player._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
+          <form class="form-presence" method="post">
+            <% players.forEach(function(player) { %>
+              <div class="listItem">
+                <div class="left">
+                  <div class="fa fa-user-circle-o"></div>
+                  <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === player._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
+                </div>
+                <div class="right">
+                    <div class="radio accepted">
+                      <input type="radio" name="<%- player._id %>" value="accepted" class="accepted" onchange="submitForm()">
+                      <div class="check fa fa-check-circle-o"></div>
+                    </div>
+                    <div class="radio pending">
+                      <input type="radio" name="<%- player._id %>" value="pending" class="pending" onchange="submitForm()">
+                      <div class="check fa fa-question-circle-o"></div>
+                    </div>
+                    <div class="radio declined">
+                      <input type="radio" name="<%- player._id %>" value="declined" class="declined" onchange="submitForm()">
+                      <div class="check fa fa-times-circle-o"></div>
+                    </div>
+                </div>
               </div>
-              <div class="right">
-                <form class="form-presence" method="post">
-                  <div class="radio accepted">
-                    <input type="radio" name="presence" value="accepted" class="accepted" onchange="submitForm()">
-                    <div class="check fa fa-check-circle-o"></div>
-                  </div>
-                  <div class="radio pending">
-                    <input type="radio" name="presence" value="pending" class="pending" onchange="submitForm()">
-                    <div class="check fa fa-question-circle-o"></div>
-                  </div>
-                  <div class="radio declined">
-                    <input type="radio" name="presence" value="declined" class="declined" onchange="submitForm()">
-                    <div class="check fa fa-times-circle-o"></div>
-                  </div>
-                  <input type="hidden" name="playerId" value="<%- player._id %>">
-                </form>
-              </div>
-            </div>
-          <% }) %>
+            <% }) %>
+          </form>
         <% } %>
       </div>
     </container>

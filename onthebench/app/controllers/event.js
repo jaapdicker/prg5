@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
 var model = require('../models/event');
+var moment = require('moment');
 var _ = require('underscore');
 
 // get event page
@@ -26,6 +27,7 @@ router.get('/event/:id', function(req, res) {
   var showEvent = function(err, data) {
     if (err) res.render('event', req.session.data);
     req.session.data = _.extend(req.session.data, data);
+    req.session.data.moment = moment;
     res.render('event', req.session.data);
   }
 
@@ -33,11 +35,10 @@ router.get('/event/:id', function(req, res) {
 });
 
 router.post('/event/:id', function (req, res) {
-  var updatingPresence = function (err, data) {
-    req.session.data = _.extend(req.session.data, data);
+  var updatingPresence = function (err) {
+    req.session.data.moment = moment;
     res.render('event', req.session.data);
   }
-
 
   model.updatePresence(dbmodels.userEvent, req.params.id, req.body, updatingPresence);
 });

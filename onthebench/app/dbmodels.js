@@ -31,14 +31,14 @@ var division = mongoose.model('division', divisionSchema)
 // binding model user - event
 var user_eventSchema = new Schema({
   id: ObjectId,
-  _personId: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  _personId: { type: Schema.Types.ObjectId, ref: 'user' },
   _eventId: { type: Schema.Types.ObjectId, ref: 'event' },
   presence: {
     type: String,
     enum: ["accepted", "pending", "declined", "empty"],
     default: 'empty'
   }
-});
+}, { collection: 'Players' });
 var user_event = mongoose.model('player', user_eventSchema);
 
 // event

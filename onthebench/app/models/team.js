@@ -5,8 +5,8 @@ var moment = require('moment');
 var team = _.extend(baseModel);
 
 // fetch player call
-var fetchPlayers = function(model, teamId, callback, data) {
-   model.find({}).where({_teamId: teamId}).exec(function(err, players) {
+var fetchPlayers = function(models, teamId, callback, data) {
+   models.user.find({}).where({_teamId: teamId}).exec(function(err, players) {
     if (err) callback(err);
     var fullData = _.extend(data || {} , { players: players, moment: moment });
     callback(null, fullData);
@@ -23,7 +23,7 @@ team.fetchTeamData = function(models, id, callback) {
         events: events,
         team: team.toObject()
       }
-      fetchPlayers(models.user, id, callback, data);
+      fetchPlayers(models, id, callback, data);
     });
   });
 }

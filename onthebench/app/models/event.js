@@ -1,5 +1,4 @@
 var _ = require('underscore');
-var moment = require('moment');
 var baseModel = require('./baseModel');
 
 var event = _.extend(baseModel);
@@ -13,8 +12,7 @@ event.fetchEvent = function (models, id, callback) {
     .exec(function (err, players) {
       var data = {
         event: event,
-        players: players,
-        moment: moment
+        players: players
       }
       callback(null, data);
     });
@@ -45,28 +43,31 @@ event.createEvent = function(model, teamId, event, callback) {
 
 // check update
 event.updatePresence = function (model, eventId, presenceData, callback) {
-  var userEventData = {
-    _personId: presenceData.playerId,
-    _eventId: eventId,
-    precence: presenceData.presence,
-  };
-  model.find({
-    _personId: presenceData.playerId
-  }, function(err, data) {
-    if (err) return callback(err);
-    if (data.length === 0) {
-      var newUserEvent = new model(userEventData);
-      newUserEvent.save(function(err, data) {
-        if (err) return callback(err);
-        callback(null, data);
-      });
-    } else {
-      model.findByIdAndUpdate({ _personId: presenceData.playerId }, userEventData, function(err, data) {
-        if (err) return callback(err);
-        callback(null, data);
-      });
-    }
-  });
+  _.each(presenceData, function(value, key) {
+    var userEventData = {
+      _personId: key,
+      _eventId: eventId,
+      presence: value,
+    };
+    model.find({
+      _personId: key
+    }, function(err, data) {
+      if (err) return callback(err);
+      if (data.length === 0) {
+        var newUserEvent = new model(userEventData);
+        newUserEvent.save(function(err, data) {
+          if (err) return callback(err);
+          callback(null, data);
+        });
+      } else {
+        model.findByIdAndUpdate({ _personId: key }, userEventData, function(err) {
+          console.log(userEventData);
+          if (err) return callback(err);
+          callback(null);
+        });
+      }
+    });
+  })
 }
 
 module.exports = event;

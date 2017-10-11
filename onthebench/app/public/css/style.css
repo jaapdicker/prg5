@@ -119,7 +119,7 @@ a.club-add {
 }
 .form-presence {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   margin: 0;
 }
