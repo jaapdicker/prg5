@@ -7,8 +7,7 @@ var club = _.extend(baseModel);
 club.fetchClub = function (model, id, callback) {
   model.findById(id, function(err, club) {
     if (err) return callback(err);
-    baseModel.set('club', club);
-    callback(null);
+    callback(null, { club: club });
   });
 }
 
@@ -33,8 +32,7 @@ club.createTeam = function (model, data, ids, callback) {
     var newTeam = new model(teamData);
     newTeam.save(function (err, data) {
       if (err) return callback(err);
-      baseModel.set('team', data);
-      callback(null);
+      callback(null, { team: data });
     });
   });
 }

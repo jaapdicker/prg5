@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
 var model = require('../models/team');
+var _ = require('underscore');
 
 // get team page
 router.get('/team/:id', function(req, res) {
-  var showTeam = function(err) {
-    res.render('team', model.data);
+  var showTeam = function(err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.render('team', req.session.data);
   }
 
   model.fetchTeamData(dbmodels, req.params.id, showTeam);
@@ -14,8 +16,9 @@ router.get('/team/:id', function(req, res) {
 
 // join or leave a team
 router.post('/team/:id/:action', function(req, res) {
-  var changingSubscription = function(err) {
-    res.redirect('/team/' + model.data.team._id);
+  var changingSubscription = function(err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.redirect('/team/' + req.session.data.team._id);
   };
 
   var ids = {
@@ -31,22 +34,22 @@ router.post('/team/:id/:action', function(req, res) {
 });
 
 router.get('/team/:id/edit', function(req, res) {
-  console.log('get team edit');
-  var showTeam = function(err) {
-    res.render('team-edit', model.data);
+  var showTeam = function(err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.render('team-edit', req.session.data);
   }
 
   model.fetchTeamData(dbmodels, req.params.id, showTeam);
 });
 
 router.post('/team/:id', function(req, res) {
-  var deletingPlayer = function(err) {
-    // res.render('team-edit', model.data);
+  var deletingPlayer = function(err, data) {
+    req.session.data = _.extend(req.session.data, data);
     res.redirect('/team/' + req.params.id + '/edit');
   }
 
-  var updatingTeam = function(err) {
-    // res.render('team-edit', model.data);
+  var updatingTeam = function(err, data) {
+    req.session.data = _.extend(req.session.data, data);
     res.redirect('/team/' + req.params.id + '/edit');
   }
 
@@ -57,7 +60,6 @@ router.post('/team/:id', function(req, res) {
     }
     model.deletePlayer(dbmodels.user, ids, deletingPlayer);
   } else {
-    console.log('update');
     model.updateTeam(dbmodels.team, model.data.team._id, req.body, updatingTeam);
   }
 });

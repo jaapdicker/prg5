@@ -11,10 +11,13 @@ event.fetchEvent = function (models, id, callback) {
     models.user.find({}, '-password')
     .where({ _teamId: event._teamId })
     .exec(function (err, players) {
-      baseModel.set('players', players);
+      var data = {
+        event: event,
+        players: players,
+        moment: moment
+      }
+      callback(null, data);
     });
-    baseModel.set('event', event);
-    callback(null);
   });
 }
 
@@ -35,8 +38,7 @@ event.createEvent = function(model, teamId, event, callback) {
   var newEvent = new model(eventData);
   newEvent.save(function( err, data) {
     if (err) return callback(err);
-    baseModel.set('event', event);
-    callback(null);
+    callback(null, { event: data });
   });
 }
 
@@ -52,7 +54,6 @@ event.updatePresence = function (model, eventId, presenceData, callback) {
     _personId: presenceData.playerId
   }, function(err, data) {
     if (err) return callback(err);
-    console.log(data);
     if (data.length === 0) {
       var newUserEvent = new model(userEventData);
       newUserEvent.save(function(err, data) {
@@ -61,7 +62,6 @@ event.updatePresence = function (model, eventId, presenceData, callback) {
       });
     } else {
       model.findByIdAndUpdate({ _personId: presenceData.playerId }, userEventData, function(err, data) {
-        console.log(data);
         if (err) return callback(err);
         callback(null, data);
       });

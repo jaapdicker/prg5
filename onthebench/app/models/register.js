@@ -12,7 +12,7 @@ register.register = function(model, user, callback) {
     if (err || user.length < 0) return callback(err);
     if (user.length === 0) {
       var newUser = new model(userData);
-      newUser.save(function(err) {
+      newUser.save(function(err, data) {
         if (err) return callback(err);
         callback(null);
       });

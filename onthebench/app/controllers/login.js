@@ -2,40 +2,29 @@ var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
 var model = require('../models/login');
+var _ = require('underscore');
 
 // get login
 router.get('/login', function (req, res) {
-  if(model.data.userId) {
+  if(req.session.data && req.session.data.loggedIn) {
     res.redirect('/');
   }
-  res.render('login', model.data);
+  res.render('login', req.session.data);
 });
 
 // post login
 router.post('/login', function (req, res) {
-
-  var logginIn = function (err) {
+  var logginIn = function (err, data) {
     // show error message
     if (err) {
-      res.render('login', model.data);
+      req.session.data.message.text = err;
+      res.render('login', req.session.data);
       return false;
     }
-    model.set('message', {});
 
-    // create readable profile
-    var cookieUser = {
-      id: model.data.profile._id,
-      firstName: model.data.profile.firstName,
-      lastName: model.data.profile.lastName,
-      email: model.data.profile.email,
-      position: model.data.profile.position,
-      _teamId: model.data.profile._teamId
-    };
-    // set login cookie
-    res.cookie('session', {
-      user: cookieUser,
-      loggedIn: true,
-    });
+    // update session
+    req.session.data = _.extend(req.session.data, data);
+
     // redirect to index
     res.redirect('/');
   }

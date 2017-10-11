@@ -19,7 +19,7 @@
           <h3><%- event.name %> - <%- moment(event.date).format('DD MMMM - h:mm'); %></h3>
         </div>
           <div class="right header">
-            <% if (team._captainId.toString() === profile._id.toString()) { %>
+            <% if (team._captainId.toString() === userId.toString()) { %>
               <a href="/event/<%- team._id %>/delete" class="fa fa-trash-o"></a>
               <a href="/team/<%- team._id %>/edit" class="fa fa-pencil"></a>
             <% } %>
@@ -32,7 +32,7 @@
             <div class="listItem">
               <div class="left">
                 <div class="fa fa-user-circle-o"></div>
-                <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === profile._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
+                <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === player._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
               </div>
               <div class="right">
                 <form class="form-presence" method="post">

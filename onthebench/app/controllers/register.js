@@ -5,10 +5,10 @@ var model = require('../models/register');
 
 // get register
 router.get('/register', function (req, res) {
-  if(model.data.userId) {
+  if(req.session.data.userId) {
     res.redirect('/');
   }
-  res.render('register', model.data);
+  res.render('register', req.session.data);
 });
 
 // post register
@@ -16,7 +16,7 @@ router.post('/register', function (req, res) {
 
   // callback function
   var registering = function (err, data) {
-    res.render('login', model.data);
+    res.render('login', req.session.data);
   }
 
   // do register

@@ -15,8 +15,7 @@ profile.update = function(model, id, data, callback) {
     // save new profile with hashed password
     updatedUser.save(function(err, profile) {
       if (err) return callback(err);
-      baseModel.set('profile', profile)
-      callback(null);
+      callback(null, { profile: _.omit(profile.toObject(), 'password') });
     });
   });
 

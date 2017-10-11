@@ -1,14 +1,15 @@
 var _ = require('underscore');
 var baseModel = require('./baseModel');
+var moment = require('moment');
 
 var team = _.extend(baseModel);
 
 // fetch player call
-var fetchPlayers = function(model, teamId, callback) {
+var fetchPlayers = function(model, teamId, callback, data) {
    model.find({}).where({_teamId: teamId}).exec(function(err, players) {
     if (err) callback(err);
-    baseModel.set('players', players);
-    callback(null);
+    var fullData = _.extend(data || {} , { players: players, moment: moment });
+    callback(null, fullData);
   });
 }
 
@@ -18,9 +19,11 @@ team.fetchTeamData = function(models, id, callback) {
     if (err) callback(err);
     models.team.findById(id, function(err, team) {
       if (err) callback(err);
-      fetchPlayers(models.user, id, callback);
-      baseModel.set('events', events);
-      baseModel.set('team', team.toObject());
+      var data = {
+        events: events,
+        team: team.toObject()
+      }
+      fetchPlayers(models.user, id, callback, data);
     });
   });
 }
@@ -31,9 +34,7 @@ team.updateTeam = function(model, id, data, callback) {
   updatedTeam.name = baseModel.get('club').name + ' ' + data.teamnr;
   model.findByIdAndUpdate(id, updatedTeam, function(err, team) {
     if (err) callback(err);
-    console.log('team', team);
-    baseModel.set('team', team);
-    callback(null);
+    callback(null, { team: team });
   });
 }
 
@@ -50,8 +51,7 @@ team.joinTeam = function(model, ids, callback) {
     var updatedUser = _.extend(data, { _teamId: ids.teamId });
     model.findByIdAndUpdate(ids.userId, updatedUser, function(err, user) {
       if (err) callback(err);
-      baseModel.set('profile', user.toObject());
-      callback(null);
+      callback(null, { profile: user.toObject() });
     });
   });
 }
@@ -62,8 +62,7 @@ team.leaveTeam = function(model, ids, callback) {
     var updatedUser = _.extend(data, { _teamId: null });
     model.findByIdAndUpdate(ids.userId, updatedUser, function(err, user) {
       if (err) callback(err);
-      baseModel.set('profile', user.toObject());
-      callback(null);
+      callback(null, { profile: user.toObject() });
     });
   });
 }

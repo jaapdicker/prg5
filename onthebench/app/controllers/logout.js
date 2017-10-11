@@ -4,9 +4,8 @@ var baseModel = require('../models/baseModel');
 
 // get logout
 router.get('/logout', function(req, res, next) {
-  res.clearCookie('session');
-  baseModel.set('userId', null);
-  baseModel.set('profile', {});
+  baseModel.clearData();
+  req.session.data = baseModel.data;
   res.redirect('/login');
 });
 

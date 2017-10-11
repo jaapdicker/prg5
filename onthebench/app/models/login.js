@@ -18,14 +18,13 @@ login.login = function (model, credentials, callback) {
         if (err || !isMatch) {
           errorHandler('Either email or password is invalid', callback, err);
         } else {
-          baseModel.set('userId', profile._id);
-          // clear posible error messages
-          baseModel.set('message', {});
-          // strip password from profile object
-          baseModel.set('profile', _.omit(profile.toObject(), 'password'));
-          // fetch a lot of data
-          baseModel.fetchData(profile._id);
-          callback(null);
+          var profileData = {
+            userId: profile._id,
+            message: {},
+            profile: _.omit(profile.toObject(), 'password'),
+            loggedIn: true
+          };
+          callback(null, profileData);
         }
       });
     }

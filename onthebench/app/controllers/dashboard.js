@@ -2,14 +2,16 @@ var express = require('express');
 var router = express.Router();
 var dbmodels = require('../dbmodels');
 var model = require('../models/dashboard');
+var _ = require('underscore');
 
 // get index
 router.get('/', function(req, res) {
   var showDashboard = function (err, data) {
-    res.render('dashboard', model.data);
+    req.session.data = _.extend(req.session.data, data);
+    res.render('dashboard', req.session.data);
   }
-  if (model.data.profile._teamId) {
-    res.redirect('/team/' + model.data.profile._teamId);
+  if (req.session.data.profile._teamId) {
+    res.redirect('/team/' + req.session.data.profile._teamId);
   } else {
     model.fetchDashboard(dbmodels, {}, showDashboard);
   }
@@ -17,7 +19,8 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
   var showSearchResults = function(err, data) {
-    res.render('dashboard', model.data);
+    req.session.data = _.extend(req.session.data, data);
+    res.render('dashboard', req.session.data);
   }
 
   model.search(dbmodels, {

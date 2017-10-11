@@ -6,7 +6,7 @@ var baseModel = function(data) {
   this.data = data;
 }
 
-baseModel.data = {
+var defaultData = {
   clubs: [],
   club: [],
   divisions: [],
@@ -23,10 +23,12 @@ baseModel.data = {
   players: [],
   profile: {},
   search: null,
-  userId: null,
+  userId: '',
   teams: [],
   team: []
 }
+
+baseModel.data = defaultData;
 
 // get function
 baseModel.get = function (prop) {
@@ -38,34 +40,41 @@ baseModel.set = function (prop, value) {
   this.data[prop] = value;
 }
 
-var fetchClubs = function() {
+
+var fetchClubs = function(req) {
   dbmodels.club.find({}, function(err, clubs) {
-    baseModel.set('clubs', clubs);
-  })
+    req.session.data.clubs = clubs;
+  });
 }
 
-var fetchDivisions = function() {
+var fetchDivisions = function(req) {
   dbmodels.division.find({}, function(err, divisions) {
-    baseModel.set('divisions', divisions);
+    req.session.data.divisions = divisions;
   });
 }
 
-var fetchProfile = function(id) {
+var fetchProfile = function(id, req) {
   dbmodels.user.findById(id, function(err, user) {
-    baseModel.set('userId', user._id);
-    baseModel.set('profile', _.omit(user.toObject(), 'password'));
-    dbmodels.team.findById(user._teamId, function(err, team) {
-      dbmodels.club.findById(team._clubId, function(err, club) {
-        baseModel.set('club', club);
+    if(user._teamId) {
+      dbmodels.team.findById(user._teamId, function(err, team) {
+        dbmodels.club.findById(team._clubId, function(err, club) {
+          req.session.data.club = club;
+        });
       });
-    });
+    }
   });
 }
 
-baseModel.fetchData = function(id) {
-  fetchProfile(id);
-  fetchDivisions();
-  fetchClubs();
+// fetch base data
+baseModel.fetchData = function(id, req) {
+  if (id) fetchProfile(id, req);
+  fetchDivisions(req);
+  fetchClubs(req);
+}
+
+// clear on logout
+baseModel.clearData = function() {
+  baseModel.data = defaultData;
 }
 
 module.exports = baseModel;

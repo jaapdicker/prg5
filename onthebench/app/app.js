@@ -1,5 +1,6 @@
 // Includes
 var express = require('express');
+var session = require('cookie-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -25,26 +26,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  name: 'session',
+  keys: ['on', 'the', 'bench'],
+  maxAge: 24*60*60*1000
+}));
 
 // Routes
-// preload non auth controllers
 app.use(require('./controllers/login'));
 app.use(require('./controllers/logout'));
 app.use(require('./controllers/register'));
 
-// check if logged in
+// checked if logged in
 app.use(function(req, res, next) {
-  if (!baseModel.data.userId && !req.cookies['session']) {
+  if (!req.session.data) req.session.data = baseModel.data;
+  if (!req.session.data.loggedIn) {
     res.redirect('/login');
-  } else if (req.cookies['session'] && req.cookies['session'].loggedIn && !baseModel.data.userId) {
-    baseModel.fetchData(req.cookies['session'].user.id);
-    next();
   } else {
+    if (!req.session.data.clubs) {
+      baseModel.fetchData(req.session.data.profile._teamId, req);
+    }
     next();
   }
 });
 
-// load all other controllers
 app.use(require('./controllers/dashboard'));
 app.use(require('./controllers/profile'));
 app.use(require('./controllers/event'));

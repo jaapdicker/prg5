@@ -9,9 +9,11 @@ dashboard.fetchDashboard = function (models, searchQuery, callback) {
     if (err) return callback(err);
     models.division.find(searchQuery, function (err, divisions) {
       if (err) return callback(err);
-      baseModel.set('clubs', clubs);
-      baseModel.set('divisions', divisions);
-      callback(null);
+      var data = {
+        clubs: clubs,
+        divisions: divisions
+      }
+      callback(null, data);
     })
   });
 }
@@ -27,10 +29,12 @@ dashboard.search = function (models, searchQuery, callback) {
     teamCursor.on('data', function (doc) {
       teams.push(doc);
     }).on('close', function () {
-      baseModel.set('clubs', clubs);
-      baseModel.set('teams', teams);
-      baseModel.set('search', searchQuery.name.$regex);
-      callback(null);
+      var data = {
+        clubs: clubs,
+        teams: teams,
+        search: searchQuery.name.$regex
+      }
+      callback(null, data);
     });
   });
 };
