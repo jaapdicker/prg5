@@ -23,7 +23,7 @@ router.post('/club/:id', function(req, res) {
     res.redirect('/team/' + req.session.data.team._id);
   }
 
-  model.createTeam(dbmodels.team, req.body, ids, creatingTeam);
+  model.createTeam(dbmodels, req.body, ids, creatingTeam);
 
 });
 

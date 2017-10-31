@@ -6,6 +6,7 @@ var register = _.extend(baseModel);
 // register function
 register.register = function(model, user, callback) {
   var userData = user;
+  userData.email = userData['email'].toLowerCase();
   model.find({
     email: user.email,
   }, function(err, user) {

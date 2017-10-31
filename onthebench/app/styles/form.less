@@ -12,6 +12,10 @@
     background-color: @backgroundColor;
     border-color: @primary;
   }
+
+  a:hover, a:focus, a:visited, a:active {
+    text-decoration: none;
+  }
 }
 
 .form-inline.form-club-search {
@@ -64,6 +68,9 @@
       height: 36px;
       cursor: pointer;
     }
+    &.formless {
+      width: 16px;
+    }
     .check {
       pointer-events: none;
       position: absolute;
@@ -77,17 +84,32 @@
       input[type=radio]:checked ~ .check {
         color: @green;
       }
+      &.checked {
+        .check {
+          color: @green;
+        }
+      }
     }
 
     &.pending {
       input[type=radio]:checked ~ .check {
         color: @orange;
       }
+      &.checked {
+        .check {
+          color: @orange;
+        }
+      }
     }
 
     &.declined {
       input[type=radio]:checked ~ .check {
         color: @red;
+      }
+      &.checked {
+        .check {
+          color: @red;
+        }
       }
     }
   }

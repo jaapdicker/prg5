@@ -1,14 +1,14 @@
 var _ = require('underscore');
 var baseModel = require('./baseModel');
-var errorHandler = require('../helpers/errorHelper.js');
+var errorHandler = require('../helpers/errorHelper');
 
 var login = _.extend(baseModel);
 
 // login function
 login.login = function (model, credentials, callback) {
-
+  var caseInsensitiveEmail = new RegExp(credentials.email, "i");
   model.findOne({
-    email: credentials.email
+    email: { $regex : caseInsensitiveEmail }
   }, function (err, profile) {
     // if (err) return callback(err);
     if(err || !profile) {

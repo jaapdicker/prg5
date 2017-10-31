@@ -7,27 +7,27 @@ var _ = require('underscore');
 
 // get event page
 router.get('/event/:id/new', function(req, res) {
-  req.session.data = _.extend(req.session.data, data);
-  res.render('event-new', data.model);
+  res.render('event-new', req.session.data);
 });
 
 router.post('/event/:id/new', function(req, res) {
   var teamId = req.params.id;
 
   var creatingEvent = function(err, data) {
-    if (err) res.render('/event/' + teamId + '/new', req.session.data);
     req.session.data = _.extend(req.session.data, data);
-    res.redirect('/event/' + req.session.data.event._id);
+    if (err) {
+      res.render('event-new', req.session.data);
+    } else {
+      res.redirect('/event/' + req.session.data.event._id);
+    }
   }
 
-  model.createEvent(dbmodels.event, teamId, req.body, creatingEvent);
+  model.createEvent(dbmodels, teamId, req.body, req.session.data.players, creatingEvent);
 });
 
 router.get('/event/:id', function(req, res) {
   var showEvent = function(err, data) {
-    if (err) res.render('event', req.session.data);
     req.session.data = _.extend(req.session.data, data);
-    req.session.data.moment = moment;
     res.render('event', req.session.data);
   }
 
@@ -35,12 +35,33 @@ router.get('/event/:id', function(req, res) {
 });
 
 router.post('/event/:id', function (req, res) {
-  var updatingPresence = function (err) {
-    req.session.data.moment = moment;
-    res.render('event', req.session.data);
+  var updatingPresence = function (err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.render('event', _.extend(req.session.data, data));
   }
 
-  model.updatePresence(dbmodels.userEvent, req.params.id, req.body, updatingPresence);
+  model.updatePresence(dbmodels.event, req.params.id, req.body, req.session.data.event.players, updatingPresence);
+});
+
+router.get('/event/:id/edit', function (req, res) {
+  res.render('event-edit', req.session.data);
+});
+
+router.post('/event/:id/:action', function (req, res) {
+  var updatingEvent = function (err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.redirect('/event/' + req.params.id);
+  }
+
+  var deletingEvent = function (err) {
+    res.redirect('/');
+  }
+
+  if (req.params.action === 'delete') {
+    model.deleteEvent(dbmodels.event, req.params.id, deletingEvent);
+  } else {
+    model.updateEvent(dbmodels.event, req.params.id, req.body, updatingEvent);
+  }
 });
 
 module.exports = router;

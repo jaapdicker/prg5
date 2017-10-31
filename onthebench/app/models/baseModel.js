@@ -54,7 +54,7 @@ var fetchDivisions = function(req) {
 }
 
 var fetchProfile = function(id, req) {
-  dbmodels.user.findById(id, function(err, user) {
+  dbmodels.user.findById(id, {'password': 0}, function(err, user) {
     if(user._teamId) {
       dbmodels.team.findById(user._teamId, function(err, team) {
         dbmodels.club.findById(team._clubId, function(err, club) {

@@ -13,6 +13,14 @@
     <%- include partials/nav.ejs %>
 
     <container>
+      <% if (team._captainId.toString() === profile._id.toString()) { %>
+        <div class="right">
+          <form class="form-team-delete" method="post" action="/team/<%- team._id %>/delete">
+            <button type="submit" class="fa fa-trash btn btn-basic btn-delete" />
+            <input type="hidden" name="teamId" value="<%- team._id %>">
+          </form>
+        </div>
+      <% } %>
       <form method="post" class="form form-team" action="/team/<%- team._id %>">
         <h2 class="form-heading form-team-heading">
           Edit team

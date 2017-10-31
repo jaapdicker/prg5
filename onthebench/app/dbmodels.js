@@ -29,24 +29,27 @@ var divisionSchema = new Schema({
 var division = mongoose.model('division', divisionSchema)
 
 // binding model user - event
-var user_eventSchema = new Schema({
+var presenceSchema = new Schema({
   id: ObjectId,
-  _personId: { type: Schema.Types.ObjectId, ref: 'user' },
-  _eventId: { type: Schema.Types.ObjectId, ref: 'event' },
+  playerId: { type: Schema.Types.ObjectId, ref: 'user' },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  position: { type: String, required: true },
   presence: {
     type: String,
     enum: ["accepted", "pending", "declined", "empty"],
-    default: 'empty'
+    default: "empty"
   }
-}, { collection: 'Players' });
-var user_event = mongoose.model('player', user_eventSchema);
+}, { collection: 'Presence' });
+var presence = mongoose.model('presence', presenceSchema);
 
 // event
 var eventSchema = new Schema({
   id: ObjectId,
   type: { type: String, required: true },
   name: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: String, required: true },
+  players: [ presenceSchema ],
   location: String,
   _teamId: { type: Schema.Types.ObjectId, ref: 'team' },
 }, { collection: 'Events' });
@@ -118,7 +121,7 @@ var dbmodels = {
   event: event,
   team: team,
   user: user,
-  userEvent: user_event,
+  presence: presence,
   clubTeam: club_team
 }
 

@@ -10,10 +10,11 @@ router.get('/', function(req, res) {
     req.session.data = _.extend(req.session.data, data);
     res.render('dashboard', req.session.data);
   }
+
   if (req.session.data.profile._teamId) {
     res.redirect('/team/' + req.session.data.profile._teamId);
   } else {
-    model.fetchDashboard(dbmodels, {}, showDashboard);
+    model.fetchDashboard(dbmodels, showDashboard);
   }
 });
 
@@ -25,7 +26,7 @@ router.post('/', function(req, res) {
 
   model.search(dbmodels, {
     name: {
-      "$regex": req.body.search,
+      "$regex": req.body.search || "",
       "$options": "i"
     }}, showSearchResults);
 });

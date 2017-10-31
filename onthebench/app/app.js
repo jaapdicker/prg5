@@ -1,4 +1,6 @@
+"use strict"
 // Includes
+
 var express = require('express');
 var session = require('cookie-session');
 var path = require('path');
@@ -8,10 +10,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var baseModel = require('./models/baseModel');
+
 // var expressValidator = require('express-validator');
 
 // create app
-var app = express();
+let app = express();
 
 // Configs
 app.set('case sensitive routing', false);
@@ -33,6 +36,7 @@ app.use(session({
 }));
 
 // Routes
+app.use(require('./filldb'));
 app.use(require('./controllers/login'));
 app.use(require('./controllers/logout'));
 app.use(require('./controllers/register'));

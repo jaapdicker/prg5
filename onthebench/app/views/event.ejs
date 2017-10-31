@@ -16,38 +16,52 @@
       <header>
         <div class="left header">
           <h2><%- team.name %></h2>
-          <h3><%- event.name %> - <%- moment(event.date).format('DD MMMM - h:mm'); %></h3>
+          <h3><%- event.name %> - <%- event.date %></h3>
         </div>
           <div class="right header">
             <% if (team._captainId.toString() === userId.toString()) { %>
-              <a href="/event/<%- team._id %>/delete" class="fa fa-trash-o"></a>
-              <a href="/team/<%- team._id %>/edit" class="fa fa-pencil"></a>
+              <a href="/event/<%- event._id %>/edit" class="fa fa-pencil"></a>
             <% } %>
           </div>
       </header>
       <div class="content">
         <% if(players.length > 0) { %>
           <h4>Players:</h4>
-          <form class="form-presence" method="post">
-            <% players.forEach(function(player) { %>
+          <form class="form-presence" method="post" onchange="submitForm()">
+            <% event.players.forEach(function(player) { %>
               <div class="listItem">
                 <div class="left">
                   <div class="fa fa-user-circle-o"></div>
                   <p><%- player.firstName %> <%- player.lastName %><%- team._captainId.toString() === player._id.toString() ? " (c)" : '' %> - <%- player.position %></p>
                 </div>
                 <div class="right">
+                  <% if (player._id.toString() === userId || team._captainId === userId) { %>
                     <div class="radio accepted">
-                      <input type="radio" name="<%- player._id %>" value="accepted" class="accepted" onchange="submitForm()">
+                      <input type="radio" name="<%- player._id %>" value="accepted" class="accepted" <%- player.presence === "accepted" ? 'checked' : '' %>>
                       <div class="check fa fa-check-circle-o"></div>
                     </div>
                     <div class="radio pending">
-                      <input type="radio" name="<%- player._id %>" value="pending" class="pending" onchange="submitForm()">
+                      <input type="radio" name="<%- player._id %>" value="pending" class="pending" <%- player.presence === "pending" ? 'checked' : '' %>>
                       <div class="check fa fa-question-circle-o"></div>
                     </div>
                     <div class="radio declined">
-                      <input type="radio" name="<%- player._id %>" value="declined" class="declined" onchange="submitForm()">
+                      <input type="radio" name="<%- player._id %>" value="declined" class="declined" <%- player.presence === "declined" ? 'checked' : '' %>>
                       <div class="check fa fa-times-circle-o"></div>
                     </div>
+                    <% if (player.presence === "empty") { %>
+                      <input type="hidden" name="<%- player._id %>" value="empty" />
+                    <% } %>
+                  <% } else { %>
+                    <div class="radio formless accepted <%- player.presence === "accepted" ? "checked" : ""%>">
+                      <div class="check fa fa-check-circle-o"></div>
+                    </div>
+                    <div class="radio formless pending <%- player.presence === "pending" ? "checked" : ""%>">
+                      <div class="check fa fa-question-circle-o"></div>
+                    </div>
+                    <div class="radio formless declined <%- player.presence === "declined" ? "checked" : ""%>">
+                      <div class="check fa fa-times-circle-o"></div>
+                    </div>
+                  <% } %>
                 </div>
               </div>
             <% }) %>

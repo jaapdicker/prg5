@@ -9,20 +9,30 @@ router.get('/team/:id', function(req, res) {
   var showTeam = function(err, data) {
     req.session.data = _.extend(req.session.data, data);
     res.render('team', req.session.data);
-  }
+  };
 
-  model.fetchTeamData(dbmodels, req.params.id, showTeam);
+  var ids = {
+    userId: req.session.data.profile._id,
+    teamId: req.params.id
+  };
+
+  model.fetchTeamData(dbmodels, ids, showTeam);
 });
 
 // join or leave a team
 router.post('/team/:id/:action', function(req, res) {
   var changingSubscription = function(err, data) {
     req.session.data = _.extend(req.session.data, data);
-    res.redirect('/team/' + req.session.data.team._id);
+    res.redirect('/team/' + req.params.id);
   };
 
+  var deletingTeam = function (err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.redirect('/');
+  }
+
   var ids = {
-    userId: req.cookies['session'].user.id,
+    userId: req.session.data.profile._id,
     teamId: req.params.id
   };
 
@@ -30,6 +40,8 @@ router.post('/team/:id/:action', function(req, res) {
     model.joinTeam(dbmodels.user, ids, changingSubscription);
   } else if (req.params.action === 'leave') {
     model.leaveTeam(dbmodels.user, ids, changingSubscription);
+  } else if (req.params.action === 'delete') {
+    model.deleteTeam(dbmodels, ids, deletingTeam);
   }
 });
 

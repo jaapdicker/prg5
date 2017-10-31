@@ -36,7 +36,7 @@
               <div class="listItem">
                 <div class="left">
                   <div class="fa fa-soccer-ball-o"></div>
-                  <h3><%- club.name %></h3>
+                  <h3><%- club.name %><%- club.team_count ? " - " + club.team_count + " teams" : '' %></h3>
                 </div>
                 <div class="right">
                   <a href="/club/<%- club._id %>" class="fa fa-angle-right right-aligned"></a>

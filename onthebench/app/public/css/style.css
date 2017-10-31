@@ -43,6 +43,10 @@ container {
 .fa {
   color: #333;
 }
+.right {
+  display: flex;
+  align-self: flex-end;
+}
 /* BUTTON */
 .container-btn {
   width: 250px;
@@ -58,6 +62,13 @@ container {
 }
 .btn-inverted.btn-primary:hover .fa {
   color: #fff;
+}
+.btn-basic {
+  background-color: transparent;
+}
+.btn-basic.btn-delete {
+  color: #A73416;
+  font-size: 24px;
 }
 a.club-add {
   width: 100%;
@@ -87,6 +98,12 @@ a.club-add {
   color: #219351;
   background-color: #fff;
   border-color: #219351;
+}
+.form a:hover,
+.form a:focus,
+.form a:visited,
+.form a:active {
+  text-decoration: none;
 }
 .form-inline.form-club-search {
   width: 100%;
@@ -133,6 +150,9 @@ a.club-add {
   height: 36px;
   cursor: pointer;
 }
+.form-presence .radio.formless {
+  width: 16px;
+}
 .form-presence .radio .check {
   pointer-events: none;
   position: absolute;
@@ -144,10 +164,19 @@ a.club-add {
 .form-presence .radio.accepted input[type=radio]:checked ~ .check {
   color: #219351;
 }
+.form-presence .radio.accepted.checked .check {
+  color: #219351;
+}
 .form-presence .radio.pending input[type=radio]:checked ~ .check {
   color: #CE842E;
 }
+.form-presence .radio.pending.checked .check {
+  color: #CE842E;
+}
 .form-presence .radio.declined input[type=radio]:checked ~ .check {
+  color: #A73416;
+}
+.form-presence .radio.declined.checked .check {
   color: #A73416;
 }
 /* listItems */
