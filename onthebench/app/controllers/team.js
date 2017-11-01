@@ -19,14 +19,26 @@ router.get('/team/:id', function(req, res) {
   model.fetchTeamData(dbmodels, ids, showTeam);
 });
 
-// join or leave a team
-router.post('/team/:id/:action', function(req, res) {
-  var changingSubscription = function(err, data) {
+
+// join team
+router.post('/team/:id/join', function (req, res) {
+  var joiningTeam = function (err, data) {
     req.session.data = _.extend(req.session.data, data);
     res.redirect('/team/' + req.params.id);
+  }
+
+  var ids = {
+    userId: req.session.data.profile._id,
+    teamId: req.params.id
   };
 
-  var deletingTeam = function (err, data) {
+  model.joinTeam(dbmodels.user, ids, joiningTeam);
+});
+
+
+// leave team
+router.post('/team/:id/leave', function (req, res) {
+  var leavingTeam = function (err, data) {
     req.session.data = _.extend(req.session.data, data);
     res.redirect('/');
   }
@@ -36,15 +48,27 @@ router.post('/team/:id/:action', function(req, res) {
     teamId: req.params.id
   };
 
-  if (req.params.action === 'join') {
-    model.joinTeam(dbmodels.user, ids, changingSubscription);
-  } else if (req.params.action === 'leave') {
-    model.leaveTeam(dbmodels.user, ids, changingSubscription);
-  } else if (req.params.action === 'delete') {
-    model.deleteTeam(dbmodels, ids, deletingTeam);
-  }
+  model.leaveTeam(dbmodels.user, ids, leavingTeam);
 });
 
+
+// delete team
+router.post('/team/:id/delete', function (req, res) {
+  var changingSubscription = function (err, data) {
+    req.session.data = _.extend(req.session.data, data);
+    res.redirect('/team/' + req.params.id);
+  }
+
+  var ids = {
+    userId: req.session.data.profile._id,
+    teamId: req.params.id
+  };
+
+  model.deleteTeam(dbmodels.user, ids, deletingTeam);
+});
+
+
+// edit team
 router.get('/team/:id/edit', function(req, res) {
   var showTeam = function(err, data) {
     req.session.data = _.extend(req.session.data, data);

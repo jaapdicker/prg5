@@ -40,7 +40,7 @@ club.createTeam = function (models, data, ids, callback) {
         if (err) {
           errorHandler('Could not create team', callback, err);
         } else {
-          models.user.findByIdAndUpdate(ids.userId, { _teamId: data._id, 'password': 0 }, function(err, profile) {
+          models.user.findByIdAndUpdate(ids.userId, { _teamId: data._id }, { 'password': 0 }, function(err, profile) {
             if (err) {
               errorHandler('Could not create team', callback, err);
             } else {
