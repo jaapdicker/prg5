@@ -41,19 +41,19 @@ baseModel.set = function (prop, value) {
 }
 
 
-var fetchClubs = function(req) {
+baseModel.fetchClubs = function(req) {
   dbmodels.club.find({}, function(err, clubs) {
     req.session.data.clubs = clubs;
   });
 }
 
-var fetchDivisions = function(req) {
+baseModel.fetchDivisions = function(req) {
   dbmodels.division.find({}, function(err, divisions) {
     req.session.data.divisions = divisions;
   });
 }
 
-var fetchProfile = function(id, req) {
+baseModel.fetchProfile = function(id, req) {
   dbmodels.user.findById(id, {'password': 0}, function(err, user) {
     if(user._teamId) {
       dbmodels.team.findById(user._teamId, function(err, team) {
@@ -67,9 +67,9 @@ var fetchProfile = function(id, req) {
 
 // fetch base data
 baseModel.fetchData = function(id, req) {
-  if (id) fetchProfile(id, req);
-  fetchDivisions(req);
-  fetchClubs(req);
+  if (id) baseModel.fetchProfile(id, req);
+  baseModel.fetchDivisions(req);
+  baseModel.fetchClubs(req);
 }
 
 // clear on logout

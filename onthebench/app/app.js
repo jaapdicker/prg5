@@ -14,7 +14,7 @@ var baseModel = require('./models/baseModel');
 // var expressValidator = require('express-validator');
 
 // create app
-let app = express();
+var app = express();
 
 // Configs
 app.set('case sensitive routing', false);
@@ -43,15 +43,11 @@ app.use(require('./controllers/register'));
 
 // checked if logged in
 app.use(function(req, res, next) {
-  if (!req.session.data) req.session.data = baseModel.data;
-  if (!req.session.data.loggedIn) {
-    res.redirect('/login');
-  } else {
-    if (!req.session.data.clubs) {
-      baseModel.fetchData(req.session.data.profile._teamId, req);
-    }
-    next();
-  }
+  console.log(req.session.data.profile);
+  if (!req.session.data) baseModel.fetchData(req);
+  if (!req.session.data.loggedIn || !req.session.data.userId) res.redirect('/login');
+  if (req.session.data.userId) baseModel.fetchProfile(req.session.data.userId, req);
+  next();
 });
 
 app.use(require('./controllers/dashboard'));

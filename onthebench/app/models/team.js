@@ -7,7 +7,7 @@ var team = _.extend(baseModel);
 
 // fetch player call
 var fetchPlayers = function (models, teamId, callback, data) {
-   models.user.find({}).where({_teamId: teamId}).exec(function (err, players) {
+   models.user.find({ 'password': 0}).where({_teamId: teamId}).exec(function (err, players) {
     if (err || !players) {
       errorHandler('No players could be found', callback, err);
     } else {
@@ -20,12 +20,8 @@ var fetchPlayers = function (models, teamId, callback, data) {
 // fetch team function
 team.fetchTeamData = function (models, ids, callback) {
   models.team.findById(ids.teamId, function(err, team) {
-    if (err) {
+    if (err || !team) {
       errorHandler('', callback, err);
-    } else if (!team) {
-      models.user.findByIdAndUpdate(ids.userId, { _teamId: null }, function(err, user) {
-        callback(null, { profile: user });
-      });
     } else {
       models.event.find({ _teamId: team._id }, function(err, events) {
         if (err) {
@@ -64,7 +60,7 @@ team.deletePlayer = function (model, ids, callback) {
 
 // join team
 team.joinTeam = function (model, ids, callback) {
-  model.findById(ids.userId, function(err, data) {
+  model.findById(ids.userId, { 'password': 0 }, function(err, data) {
     var updatedUser = _.extend(data, { _teamId: ids.teamId });
     model.findByIdAndUpdate(ids.userId, updatedUser, function (err, user) {
       if (err || !user) {
@@ -78,9 +74,9 @@ team.joinTeam = function (model, ids, callback) {
 
 // leave team
 team.leaveTeam = function (model, ids, callback) {
-  model.findById(ids.userId, function (err, data) {
+  model.findById(ids.userId, { 'password': 0 }, function (err, data) {
     var updatedUser = _.extend(data, { _teamId: null });
-    model.findByIdAndUpdate(ids.userId, updatedUser, function (err, user) {
+    model.findByIdAndUpdate(ids.userId, { 'password': 0 }, updatedUser, function (err, user) {
       if (err || !user) {
         errorHandler('User could not be found', callback, err);
       } else {
@@ -96,11 +92,11 @@ team.deleteTeam = function (models, ids, callback) {
     if (err) {
       errorHandler('', callback, err);
     } else {
-      models.user.findByIdAndUpdate(ids.userId, { _teamId: null }, function (err, user) {
+      models.user.findByIdAndUpdate(ids.userId, { _teamId: null, 'password': 0 }, function (err, user) {
         if (err || !user) {
           errorHandler('No user could be found', callback, err);
         } {
-          callback(null, { profile: _.omit(user.toObject(), 'password') });
+          callback(null, { profile: user.toObject() });
         }
       })
     }

@@ -11,7 +11,7 @@ router.get('/profile', function (req, res) {
 
 // post profile update
 router.post('/profile', function (req, res) {
-  var userId = req.cookies['session'].user.id;
+  var userId = req.session.data.profile._id;
 
   // find only user and update (findOneAndUpdate not possible with password hashing)
   var updating = function (err, data) {
