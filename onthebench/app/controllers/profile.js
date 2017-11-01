@@ -20,7 +20,7 @@ router.post('/profile', function (req, res) {
       return false;
     }
     req.session.data = _.extend(req.session.data, data);
-    res.render('profile', req.session.data);
+    res.redirect('/profile');
   }
 
   model.update(dbmodels.user, userId, req.body, updating);

@@ -16,7 +16,7 @@ router.post('/register', function (req, res) {
 
   // callback function
   var registering = function (err, data) {
-    res.render('login', req.session.data);
+    res.redirect('/login');
   }
 
   // do register
