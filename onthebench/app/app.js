@@ -1,6 +1,4 @@
-"use strict"
 // Includes
-
 var express = require('express');
 var session = require('cookie-session');
 var path = require('path');
