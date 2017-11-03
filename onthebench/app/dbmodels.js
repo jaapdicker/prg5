@@ -29,19 +29,17 @@ var divisionSchema = new Schema({
 var division = mongoose.model('division', divisionSchema)
 
 // binding model user - event
-var presenceSchema = new Schema({
+var user_eventSchema = new Schema({
   id: ObjectId,
-  playerId: { type: Schema.Types.ObjectId, ref: 'user' },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  position: { type: String, required: true },
+  _playerId: { type: Schema.Types.ObjectId, ref: 'user' },
+  _eventId: { type: Schema.Types.ObjectId, ref: 'event' },
   presence: {
     type: String,
     enum: ["accepted", "pending", "declined", "empty"],
     default: "empty"
   }
-}, { collection: 'Presence' });
-var presence = mongoose.model('presence', presenceSchema);
+}, { collection: 'UserEvent' });
+var user_event = mongoose.model('userEvent', user_eventSchema);
 
 // event
 var eventSchema = new Schema({
@@ -49,7 +47,6 @@ var eventSchema = new Schema({
   type: { type: String, required: true },
   name: { type: String, required: true },
   date: { type: String, required: true },
-  players: [ presenceSchema ],
   location: String,
   _teamId: { type: Schema.Types.ObjectId, ref: 'team' },
 }, { collection: 'Events' });
@@ -70,7 +67,7 @@ var club_teamSchema = new Schema({
   _clubId: [{ type: Schema.Types.ObjectId, ref: 'club' }],
   _teamId: [{ type: Schema.Types.ObjectId, ref: 'team' }]
 });
-var club_team = mongoose.model('event', eventSchema);
+var club_team = mongoose.model('clubTeam', club_teamSchema);
 
 // user
 var userSchema = new Schema({
@@ -121,7 +118,7 @@ var dbmodels = {
   event: event,
   team: team,
   user: user,
-  presence: presence,
+  userEvent: user_event,
   clubTeam: club_team
 }
 

@@ -5,11 +5,12 @@ var model = require('../models/event');
 var moment = require('moment');
 var _ = require('underscore');
 
-// get event page
+// get event creation page
 router.get('/event/:id/new', function(req, res) {
   res.render('event-new', req.session.data);
 });
 
+// create new event
 router.post('/event/:id/new', function(req, res) {
   var teamId = req.params.id;
 
@@ -25,8 +26,8 @@ router.post('/event/:id/new', function(req, res) {
   model.createEvent(dbmodels, teamId, req.body, req.session.data.players, creatingEvent);
 });
 
+// show event
 router.get('/event/:id', function(req, res) {
-  console.log('show');
   var showEvent = function(err, data) {
     req.session.data = _.extend(req.session.data, data);
     res.render('event', req.session.data);
@@ -35,19 +36,22 @@ router.get('/event/:id', function(req, res) {
   model.fetchEvent(dbmodels, req.params.id, showEvent);
 });
 
+// update presence
 router.post('/event/:id', function (req, res) {
   var updatingPresence = function (err, data) {
     req.session.data = _.extend(req.session.data, data);
     res.redirect('/event/' + req.params.id);
   }
 
-  model.updatePresence(dbmodels.event, req.params.id, req.body, req.session.data.event.players, updatingPresence);
+  model.updatePresence(dbmodels.userEvent, req.body, updatingPresence);
 });
 
+// get event edit page
 router.get('/event/:id/edit', function (req, res) {
   res.render('event-edit', req.session.data);
 });
 
+// update or delete event
 router.post('/event/:id/:action', function (req, res) {
   var updatingEvent = function (err, data) {
     req.session.data = _.extend(req.session.data, data);

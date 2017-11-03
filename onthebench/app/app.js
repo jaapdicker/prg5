@@ -44,6 +44,7 @@ app.use(require('./controllers/register'));
 // checked if logged in
 app.use(function(req, res, next) {
   if(!req.session.data || !req.session.data.loggedIn) {
+    req.session.data = baseModel.data;
     res.redirect('/login');
   }
   next();

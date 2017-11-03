@@ -27,8 +27,13 @@
       <div class="content">
         <% if(players.length > 0) { %>
           <h4>Players:</h4>
-          <form class="form-presence" method="post" onchange="submitForm()">
-            <% event.players.forEach(function(player) { %>
+            <% players.forEach(function(player) {
+              playerPresence.find(function(pp) {
+                if(pp._playerId.toString() === player._id.toString()) {
+                  player.presence = pp.presence;
+                }
+              });
+            %>
               <div class="listItem">
                 <div class="left">
                   <div class="fa fa-user-circle-o"></div>
@@ -36,21 +41,21 @@
                 </div>
                 <div class="right">
                   <% if (player._id.toString() === userId || team._captainId === userId) { %>
-                    <div class="radio accepted">
-                      <input type="radio" name="<%- player._id %>" value="accepted" class="accepted" <%- player.presence === "accepted" ? 'checked' : '' %>>
-                      <div class="check fa fa-check-circle-o"></div>
-                    </div>
-                    <div class="radio pending">
-                      <input type="radio" name="<%- player._id %>" value="pending" class="pending" <%- player.presence === "pending" ? 'checked' : '' %>>
-                      <div class="check fa fa-question-circle-o"></div>
-                    </div>
-                    <div class="radio declined">
-                      <input type="radio" name="<%- player._id %>" value="declined" class="declined" <%- player.presence === "declined" ? 'checked' : '' %>>
-                      <div class="check fa fa-times-circle-o"></div>
-                    </div>
-                    <% if (player.presence === "empty") { %>
-                      <input type="hidden" name="<%- player._id %>" value="empty" />
-                    <% } %>
+                    <form class="form-presence" id="<%- player._id %>" method="post" onchange="this.submit()">
+                      <div class="radio accepted">
+                        <input type="radio" name="presence" value="accepted" class="accepted" <%- player.presence === "accepted" ? 'checked' : '' %>>
+                        <div class="check fa fa-check-circle-o"></div>
+                      </div>
+                      <div class="radio pending">
+                        <input type="radio" name="presence" value="pending" class="pending" <%- player.presence === "pending" ? 'checked' : '' %>>
+                        <div class="check fa fa-question-circle-o"></div>
+                      </div>
+                      <div class="radio declined">
+                        <input type="radio" name="presence" value="declined" class="declined" <%- player.presence === "declined" ? 'checked' : '' %>>
+                        <div class="check fa fa-times-circle-o"></div>
+                      </div>
+                      <input type="hidden" name="playerId" value="<%- player._id %>" />
+                    </form>
                   <% } else { %>
                     <div class="radio formless accepted <%- player.presence === "accepted" ? "checked" : ""%>">
                       <div class="check fa fa-check-circle-o"></div>
@@ -65,13 +70,11 @@
                 </div>
               </div>
             <% }) %>
-          </form>
         <% } %>
       </div>
     </container>
 
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/presence.js"></script>
   </body>
 </hmtl>

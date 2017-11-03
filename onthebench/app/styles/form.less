@@ -56,7 +56,7 @@
 
 .form-presence {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   margin: 0;
   .radio {
@@ -114,3 +114,37 @@
     }
   }
 }
+
+.radio.formless {
+    margin: 0 25px;
+    width: 16px;
+    .check {
+      pointer-events: none;
+      position: absolute;
+      font-size: 36px;
+      color: #999;
+      top: 4px;
+      left: -17px;
+    }
+
+    &.accepted.checked {
+        .check {
+          color: @green;
+        }
+      }
+    }
+
+    &.pending.checked {
+        .check {
+          color: @orange;
+        }
+      }
+    }
+
+    &.declined.checked {
+        .check {
+          color: @red;
+        }
+      }
+    }
+  }

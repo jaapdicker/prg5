@@ -7,12 +7,12 @@ var team = _.extend(baseModel);
 
 // fetch player call
 var fetchPlayers = function (models, teamId, callback, data) {
-   models.user.find({ 'password': 0}).where({_teamId: teamId}).exec(function (err, players) {
+   models.user.find({_teamId: teamId }, { 'password': 0 }, function (err, players) {
     if (err || !players) {
       errorHandler('No players could be found', callback, err);
     } else {
-      var fullData = _.extend(data || {} , { players: players, moment: moment });
-      callback(null, fullData);
+      data.players = players;
+      callback(null, data);
     }
   });
 }
@@ -20,28 +20,45 @@ var fetchPlayers = function (models, teamId, callback, data) {
 
 // fetch team function
 team.fetchTeamData = function (models, ids, callback) {
+  // var teamData = {};
+  // models.team.findById(ids.teamId, function (err, team) {
+  //   if (err || !team) {
+  //     errorHandler('', callback, err);
+  //   }
+  //   teamData.team = team;
+  // }).then(function(team) {
+  //   models.event.find({ _teamId: team._id }, function(err, events) {
+  //     if (err) {
+  //       errorHandler('', callback, err);
+  //     }
+  //     teamData.events = events;
+  //   }).then(function() {
+  //     models.user.find({ _id: ids.userId }, { 'password': 0 }, function(err, user) {
+  //       if (err) {
+  //         errorHandler('', callback, err);
+  //       }
+  //       teamData.profile = user[0];
+  //     }).then(function() {
+  //       callback(null, teamData);
+  //     });
+  //   })
+  // });
+
   var teamData = {};
-  models.team.findById(ids.teamId, function (err, team) {
+  models.team.findById(ids.teamId, function(err, team) {
     if (err || !team) {
       errorHandler('', callback, err);
     }
     teamData.team = team;
   }).then(function(team) {
     models.event.find({ _teamId: team._id }, function(err, events) {
-      if (err) {
+      if (err || !events) {
         errorHandler('', callback, err);
       }
       teamData.events = events;
     }).then(function() {
-      models.user.find({ _id: ids.userId }, { 'password': 0 }, function(err, user) {
-        if (err) {
-          errorHandler('', callback, err);
-        }
-        teamData.profile = user[0];
-      }).then(function() {
-        callback(null, teamData);
-      });;
-    })
+      fetchPlayers(models, ids.teamId, callback, teamData);
+    });
   });
 }
 
