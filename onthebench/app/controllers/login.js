@@ -15,18 +15,13 @@ router.get('/login', function (req, res) {
 // post login
 router.post('/login', function (req, res) {
   var logginIn = function (err, data) {
-    // show error message
     if (err) {
-      req.session.data.message.text = err;
+      req.session.data = _.extend(req.session.data, err);
       res.render('login', req.session.data);
-      return false;
+    } else {
+      req.session.data = _.extend(req.session.data, data);
+      res.redirect('/');
     }
-
-    // update session
-    req.session.data = _.extend(req.session.data, data);
-
-    // redirect to index
-    res.redirect('/');
   }
 
   model.login(dbmodels.user, {

@@ -1,8 +1,10 @@
-var baseModel = require('../models/baseModel');
-
 var errorHandler = function (message, callback, err) {
-  baseModel.set('message', { text: err ? err._message : message });
-  return callback(true);
+  var message = {
+    message : {
+      text: err ? err._message : message
+    }
+  }
+  callback(message);
 }
 
 module.exports = errorHandler;

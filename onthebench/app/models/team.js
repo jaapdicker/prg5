@@ -20,30 +20,6 @@ var fetchPlayers = function (models, teamId, callback, data) {
 
 // fetch team function
 team.fetchTeamData = function (models, ids, callback) {
-  // var teamData = {};
-  // models.team.findById(ids.teamId, function (err, team) {
-  //   if (err || !team) {
-  //     errorHandler('', callback, err);
-  //   }
-  //   teamData.team = team;
-  // }).then(function(team) {
-  //   models.event.find({ _teamId: team._id }, function(err, events) {
-  //     if (err) {
-  //       errorHandler('', callback, err);
-  //     }
-  //     teamData.events = events;
-  //   }).then(function() {
-  //     models.user.find({ _id: ids.userId }, { 'password': 0 }, function(err, user) {
-  //       if (err) {
-  //         errorHandler('', callback, err);
-  //       }
-  //       teamData.profile = user[0];
-  //     }).then(function() {
-  //       callback(null, teamData);
-  //     });
-  //   })
-  // });
-
   var teamData = {};
   models.team.findById(ids.teamId, function(err, team) {
     if (err || !team) {
