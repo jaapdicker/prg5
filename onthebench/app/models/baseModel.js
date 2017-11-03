@@ -22,7 +22,7 @@ var defaultData = {
   moment: moment,
   players: [],
   profile: {},
-  search: null,
+  search: '',
   userId: '',
   teams: [],
   team: []

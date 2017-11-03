@@ -27,21 +27,26 @@ dashboard.fetchDashboard = function (models, callback) {
 
 // find clubs and teams
 dashboard.search = function (models, searchQuery, callback) {
+  var nameSearch = searchQuery.name ? { name: searchQuery.name } : {};
   var teams = [];
   var clubs = [];
-  var clubCursor = models.club.find(searchQuery).cursor();
-  clubCursor.on('data', function (doc) {
+
+  var clubCursor = models.club.find(nameSearch).cursor();
+  clubCursor.eachAsync(function(doc) {
     clubs.push(doc);
-    var teamCursor = models.team.find({ _clubId: doc._id }).cursor();
-    teamCursor.on('data', function (doc) {
+    var teamSearchQuery = {
+      _clubId: doc._id,
+    }
+    if (searchQuery.class) teamSearchQuery.class = searchQuery.class;
+    var teamCursor = models.team.find(teamSearchQuery).cursor();
+    teamCursor.eachAsync(function(doc) {
       teams.push(doc);
-    }).on('close', function () {
-      var data = {
-        clubs: clubs,
-        teams: teams,
-        search: searchQuery.name.$regex
-      }
-      callback(null, data);
+    });
+  }).then(function() {
+    callback(null, {
+      clubs: clubs,
+      teams: teams,
+      search: searchQuery.name.$regex + ' ' + searchQuery.class
     });
   });
 };

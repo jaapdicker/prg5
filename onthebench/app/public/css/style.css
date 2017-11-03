@@ -191,20 +191,11 @@ a.club-add {
   top: 4px;
   left: -17px;
 }
-.radio.formless.accepted input[type=radio]:checked ~ .check {
-  color: #219351;
-}
 .radio.formless.accepted.checked .check {
   color: #219351;
 }
-.radio.formless.pending input[type=radio]:checked ~ .check {
-  color: #CE842E;
-}
 .radio.formless.pending.checked .check {
   color: #CE842E;
-}
-.radio.formless.declined input[type=radio]:checked ~ .check {
-  color: #A73416;
 }
 .radio.formless.declined.checked .check {
   color: #A73416;

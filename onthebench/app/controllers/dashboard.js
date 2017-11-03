@@ -24,11 +24,17 @@ router.post('/', function(req, res) {
     res.render('dashboard', req.session.data);
   }
 
+  var searchQuery = {
+    search: req.body.search ? req.body.search : "",
+    divisions: req.body.divisions ? req.body.divisions : ""
+  };
   model.search(dbmodels, {
     name: {
-      "$regex": req.body.search || "",
+      "$regex": searchQuery.search,
       "$options": "i"
-    }}, showSearchResults);
+    },
+    class: searchQuery.divisions,
+  }, showSearchResults);
 });
 
 module.exports = router;

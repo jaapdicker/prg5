@@ -18,7 +18,7 @@
         <form method="post" action="/" class="form form-inline form-club-search">
           <label for="clubSearchInput" class="sr-only">Search for a club</label>
           <input type="text" id="clubSearchInput" name="search" class="form-control" placeholder="Club" />
-          <select id="divisionSearchSelect" name="class" class="form-control select">
+          <select id="divisionSearchSelect" name="divisions" class="form-control select">
             <option value="" selected disabled>Class</option>
             <% divisions.forEach(function(division) { %>
               <option value="<%- division.name %>"><%- division.name %></option>
