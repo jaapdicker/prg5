@@ -24,6 +24,11 @@
               <option value="<%- division.name %>"><%- division.name %></option>
             <% }) %>
           </select>
+          <select id="matchDaySelect" name="matchday" class="form-control select">
+            <option value="" selected disabled>Matchday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+          </select>
           <button type="submit" class="btn btn-inverted btn-primary"><div class="fa fa-search"></div></button>
         </form>
         <div class="content">

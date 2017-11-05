@@ -35,7 +35,13 @@
           <% events.forEach(function(event) { %>
             <div class="listItem">
               <div class="left">
-                <div class="fa <%- event.type === 'match' ? 'fa-star-o' : 'fa-retweet' %>"></div>
+                <% if (event.type === 'match') { %>
+                  <div class="fa fa-star-o"></div>
+                <% } else if (event.type === 'training') { %>
+                  <div class="fa fa-retweet"></div>
+                <% } else { %>
+                  <div class="fa fa-bell-o"></div>
+                <% } %>
                 <p><%- event.name %></p>
                 <div class="fa fa-clock-o"></div>
                 <p><%- event.date %></p>

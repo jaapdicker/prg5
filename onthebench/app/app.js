@@ -43,7 +43,7 @@ app.use(require('./controllers/register'));
 app.use(function(req, res, next) {
   if(!req.session.data || !req.session.data.loggedIn) {
     req.session.data = baseModel.data;
-    res.redirect('/login');
+    res.redirect('/logout');
   }
   next();
 });

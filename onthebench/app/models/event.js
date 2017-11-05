@@ -60,8 +60,9 @@ event.createEvent = function(models, teamId, event, players, callback) {
 
 
 // precense update
-event.updatePresence = function (model, data, callback) {
-  model.findOneAndUpdate({ _playerId: data.playerId }, { presence: data.presence }, function(err, player) {
+event.updatePresence = function (model, eventId, data, callback) {
+  console.log(data);
+  model.findOneAndUpdate({ _playerId: data.playerId, _eventId: eventId }, { presence: data.presence }, function(err, player) {
     if (err) {
       errorHandler('', callback, err);
     } else {

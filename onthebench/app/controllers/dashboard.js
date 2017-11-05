@@ -26,14 +26,17 @@ router.post('/', function(req, res) {
 
   var searchQuery = {
     search: req.body.search ? req.body.search : "",
-    divisions: req.body.divisions ? req.body.divisions : ""
+    divisions: req.body.divisions ? req.body.divisions : "",
+    matchday: req.body.matchday ? req.body.matchday : ""
   };
+
   model.search(dbmodels, {
     name: {
       "$regex": searchQuery.search,
       "$options": "i"
     },
     class: searchQuery.divisions,
+    matchday: searchQuery.matchday
   }, showSearchResults);
 });
 

@@ -43,7 +43,7 @@ router.post('/event/:id', function (req, res) {
     res.redirect('/event/' + req.params.id);
   }
 
-  model.updatePresence(dbmodels.userEvent, req.body, updatingPresence);
+  model.updatePresence(dbmodels.userEvent, req.params.id, req.body, updatingPresence);
 });
 
 // get event edit page

@@ -38,6 +38,8 @@ dashboard.search = function (models, searchQuery, callback) {
       _clubId: doc._id,
     }
     if (searchQuery.class) teamSearchQuery.class = searchQuery.class;
+    if (searchQuery.matchday) teamSearchQuery.matchday = searchQuery.matchday;
+
     var teamCursor = models.team.find(teamSearchQuery).cursor();
     teamCursor.eachAsync(function(doc) {
       teams.push(doc);
