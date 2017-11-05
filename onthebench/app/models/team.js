@@ -6,8 +6,8 @@ var moment = require('moment');
 var team = _.extend(baseModel);
 
 // fetch player call
-var fetchPlayers = function (models, teamId, callback, data) {
-   models.user.find({_teamId: teamId }, { 'password': 0 }, function (err, players) {
+var fetchPlayers = function (model, teamId, callback, data) {
+   model.find({_teamId: teamId }, { 'password': 0 }, function (err, players) {
     if (err || !players) {
       errorHandler('No players could be found', callback, err);
     } else {
@@ -33,7 +33,7 @@ team.fetchTeamData = function (models, ids, callback) {
       }
       teamData.events = events;
     }).then(function() {
-      fetchPlayers(models, ids.teamId, callback, teamData);
+      fetchPlayers(models.user, ids.teamId, callback, teamData);
     });
   });
 }
@@ -56,7 +56,7 @@ team.updateTeam = function (model, id, data, callback) {
 // remove player from team (team from player)
 team.deletePlayer = function (model, ids, callback) {
   model.findByIdAndUpdate(ids.userId, { _teamId: null }, function (err, player) {
-    fetchPlayers(model, ids.teamid, callback);
+    fetchPlayers(model, ids.teamId, callback, {});
   });
 }
 

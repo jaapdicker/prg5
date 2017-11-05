@@ -70,7 +70,6 @@ router.post('/team/:id/delete', function (req, res) {
 
 // edit team
 router.get('/team/:id/edit', function(req, res) {
-  console.log(req.session.data);
   var showTeam = function(err, data) {
     req.session.data = _.extend(req.session.data, data);
     res.render('team-edit', req.session.data);
