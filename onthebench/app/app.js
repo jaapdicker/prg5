@@ -9,8 +9,6 @@ var bodyParser = require('body-parser');
 var _ = require('underscore');
 var baseModel = require('./models/baseModel');
 
-// var expressValidator = require('express-validator');
-
 // create app
 var app = express();
 
